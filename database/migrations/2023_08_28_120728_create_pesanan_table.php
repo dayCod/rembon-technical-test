@@ -13,7 +13,15 @@ return new class extends Migration
     {
         Schema::create('pesanan', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->uuid();
+            $table->foreignId('user_id')->constrained('user')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->timestamp('tgl_pesanan')->nullable();
+            $table->string('kode_voucher', 20)->nullable();
+            $table->timestamp('tgl_pembayaran_lunas')->nullable();
+            $table->timestamp('tgl_dibatalkan')->nullable();
+            $table->string('nomor_pesanan', 10)->nullable();
         });
     }
 

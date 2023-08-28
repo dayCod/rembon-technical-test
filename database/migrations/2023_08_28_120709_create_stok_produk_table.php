@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('stok_produk', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('produk_id')->constrained('produk')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->unsignedInteger('stok')->default(0);
+            $table->timestamp('tgl_diubah')->nullable();
         });
     }
 

@@ -13,7 +13,15 @@ return new class extends Migration
     {
         Schema::create('produk', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->uuid();
+            $table->string('nama', 100);
+            $table->string('brand', 40);
+            $table->unsignedBigInteger('harga');
+            $table->string('slug')->unique()->nullable();
+            $table->timestamp('tgl_dibuat')->nullable();
+            $table->timestamp('tgl_diubah')->nullable();
+            $table->timestamp('tgl_rilis')->nullable();
+            $table->timestamp('tgl_dihapus')->nullable();
         });
     }
 
