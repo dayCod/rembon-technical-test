@@ -11,7 +11,7 @@
     <title>Hello, world!</title>
   </head>
   <body>
-    <h1>Hello, world!</h1>
+    @yield('content')
 
     <!-- Optional JavaScript; choose one of the two! -->
 
