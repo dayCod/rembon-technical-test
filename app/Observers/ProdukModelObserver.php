@@ -17,4 +17,12 @@ class ProdukModelObserver
         $produk->tgl_dibuat = now();
         $produk->tgl_rilis = now();
     }
+
+    /**
+     * Before the record was updated.
+     */
+    public function updating(Produk $produk): void
+    {
+        $produk->tgl_diubah = now();
+    }
 }

@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Produk;
+use App\Models\StokProduk;
 use App\Models\User;
 use App\Observers\ProdukModelObserver;
+use App\Observers\StokProdukModelObserver;
 use App\Observers\UserModelObserver;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
@@ -34,6 +36,9 @@ class EventServiceProvider extends ServiceProvider
 
         // Produk Model Observer
         Produk::observe(ProdukModelObserver::class);
+
+        // Stok Produk Model Observer
+        StokProduk::observe(StokProdukModelObserver::class);
     }
 
     /**
