@@ -1,6 +1,6 @@
-@extends('backside.layout.app', ['breadcrumb_heading' => 'Dashboard Admin', 'breadcrumb_sections' => ['Dashboard Admin']])
+@extends('layout.backside.app', ['breadcrumb_heading' => 'Dashboard', 'breadcrumb_sections' => ['Dashboard']])
 
-@section('page-title', 'AZ Product - Dashboard Admin')
+@section('page-title', 'AZ Product - Dashboard')
 
 @section('content')
     <div class="row">

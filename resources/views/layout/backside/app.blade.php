@@ -49,14 +49,14 @@
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
-        @include('backside.layout.header')
+        @include('layout.backside.header')
         <!-- ============================================================== -->
         <!-- End Topbar header -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        @include('backside.layout.sidebar')
+        @include('layout.backside.sidebar')
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -99,7 +99,7 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            @include('backside.layout.footer')
+            @include('layout.backside.footer')
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->
@@ -142,9 +142,8 @@
     <script src="{{ asset('backside/dist/js/pages/calendar/cal-init.js') }}"></script>
     <script src="{{ asset('frontside/vendor/iziToast/dist/js/iziToast.min.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    @include('util.toast')
-    @include('util.sweet-alert-delete')
-    @include('util.sweet-alert-withdraw')
+    @include('utilities.toast')
+    @include('utilities.sweet-alert-delete')
 </body>
 
 </html>
