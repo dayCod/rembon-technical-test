@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('alamat', 200)->nullable();
             $table->string('nomor_hp', 15)->nullable();
             $table->enum('jenis_kelamin', ['pria', 'wanita'])->nullable();
-            $table->date('tgl_lahir');
+            $table->date('tgl_lahir')->nullable();
             $table->enum('role', ['seller', 'buyer']);
             $table->timestamp('tgl_dibuat')->nullable();
             $table->timestamp('tgl_diubah')->nullable();
