@@ -12,7 +12,7 @@
                     </a>
                 </li>
 
-                <!-- Member-->
+                @role('seller')
                 <li class="list-divider"></li>
 
                 <li class="nav-small-cap"><span class="hide-menu">Informasi Produk</span></li>
@@ -23,7 +23,9 @@
                         <span class="hide-menu">Atur Produk</span>
                     </a>
                 </li>
+                @endrole
 
+                @role('buyer')
                 <li class="list-divider"></li>
 
                 <li class="nav-small-cap"><span class="hide-menu">Informasi Pesanan</span></li>
@@ -34,6 +36,7 @@
                         <span class="hide-menu">Atur Pesanan</span>
                     </a>
                 </li>
+                @endrole
 
             </ul>
         </nav>
