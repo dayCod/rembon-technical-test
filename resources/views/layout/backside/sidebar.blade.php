@@ -8,30 +8,30 @@
                 <li class="sidebar-item selected">
                     <a class="sidebar-link" href="" aria-expanded="false">
                         <i class="fas fa-home"></i>
-                        <span class="hide-menu">Dashboard</span>
+                        <span class="hide-menu">Beranda</span>
                     </a>
                 </li>
 
                 <!-- Member-->
                 <li class="list-divider"></li>
 
-                <li class="nav-small-cap"><span class="hide-menu">Product Information</span></li>
+                <li class="nav-small-cap"><span class="hide-menu">Informasi Produk</span></li>
 
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('backside.product.index-view') }}" aria-expanded="false">
                         <i class="fas fa-box"></i>
-                        <span class="hide-menu">Manage Product</span>
+                        <span class="hide-menu">Atur Produk</span>
                     </a>
                 </li>
 
                 <li class="list-divider"></li>
 
-                <li class="nav-small-cap"><span class="hide-menu">Order Information</span></li>
+                <li class="nav-small-cap"><span class="hide-menu">Informasi Pesanan</span></li>
 
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="" aria-expanded="false">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="hide-menu">Manage Order</span>
+                        <span class="hide-menu">Atur Pesanan</span>
                     </a>
                 </li>
 

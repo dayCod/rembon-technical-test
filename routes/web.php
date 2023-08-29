@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Backside\DashboardController;
+use App\Http\Controllers\Backside\ProductController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -13,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
     Route::middleware(['guest'])->group(function () {
-        Route::get('login', [LoginController::class, 'loginFormView'])->name('login-view');
-        Route::get('register', [RegisterController::class, 'registerFormView'])->name('register-view');
+        Route::get('/login', [LoginController::class, 'loginFormView'])->name('login-view');
+        Route::get('/register', [RegisterController::class, 'registerFormView'])->name('register-view');
     });
 });
 
@@ -24,7 +25,15 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
 |--------------------------------------------------------------------------
 */
 Route::group(['prefix' => 'backside', 'as' => 'backside.'], function () {
-    Route::get('dashboard', [DashboardController::class, 'dashboardPageView'])->name('index');
+    Route::get('/dashboard', [DashboardController::class, 'dashboardPageView'])->name('index');
+
+    // Product
+    Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
+        Route::get('/', [ProductController::class, 'productIndexView'])->name('index-view');
+        Route::get('/create', [ProductController::class, 'createProductFormView'])->name('create-view');
+        Route::get('/{uuid}/edit', [ProductController::class, 'editProductFormView'])->name('edit-view');
+        Route::get('/{uuid}/trash', [ProductController::class, 'trashedProductView'])->name('trash-view');
+    });
 });
 
 
