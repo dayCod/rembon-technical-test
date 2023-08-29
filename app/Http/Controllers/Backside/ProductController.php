@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backside;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Product\CreateProductRequest;
+use App\Http\Requests\Product\CreateAndUpdateProductRequest;
 use App\Models\Produk;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -36,10 +36,10 @@ class ProductController extends Controller
     /**
      * store product data to produk table.
      *
-     * @param CreateProductRequest $request
+     * @param CreateAndUpdateProductRequest $request
      * @return RedirectResponse
      */
-    public function storeProductToProdukTable(CreateProductRequest $request): RedirectResponse
+    public function storeProductToProdukTable(CreateAndUpdateProductRequest $request): RedirectResponse
     {
         $process = app('CreateProduct')->execute($request->validated());
 
