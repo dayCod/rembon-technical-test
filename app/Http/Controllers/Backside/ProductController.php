@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backside;
 
 use App\Http\Controllers\Controller;
+use App\Models\Produk;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,9 @@ class ProductController extends Controller
      */
     public function productIndexView(): View
     {
-        return view('page.produk.index');
+        $kumpulan_produk = Produk::orderBy('id', 'desc')->get();
+
+        return view('page.produk.index', compact('kumpulan_produk'));
     }
 
     /**

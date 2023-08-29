@@ -24,13 +24,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse($kumpulan_produk as $produk)
                                 <tr>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td class="text-center">{{ $produk->nama }}</td>
+                                    <td class="text-center">{{ $produk->stokProduk->stok }}</td>
+                                    <td class="text-center">-</td>
+                                    <td class="text-center">-</td>
                                 </tr>
+                                @empty
+                                <tr>
+                                    <td class="text-center" colspan="5">{{ __('Data Kosong') }}</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                             <tfoot>
                                 <tr>

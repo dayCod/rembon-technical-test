@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Produk extends Model
 {
@@ -26,4 +27,14 @@ class Produk extends Model
      * @var array<int, string>
      */
     protected $guarded = ['id'];
+
+    /**
+     * has one relation between product and stock of product.
+     *
+     * @return HasOneRelation
+     */
+    public function stokProduk(): HasOne
+    {
+        return $this->hasOne(StokProduk::class, 'produk_id', 'id');
+    }
 }
