@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Backside\DashboardController;
 use App\Http\Controllers\Backside\ProductController;
@@ -17,6 +18,9 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
         Route::get('/login', [LoginController::class, 'loginFormView'])->name('login-view');
         Route::post('/login', [LoginController::class, 'authenticateCredential'])->name('authenticate-user');
         Route::get('/register', [RegisterController::class, 'registerFormView'])->name('register-view');
+    });
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/logout', [LogoutController::class, 'authenticatedUserLogout'])->name('user-logout');
     });
 });
 

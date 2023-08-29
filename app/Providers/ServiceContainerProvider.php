@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\Auth\DefaultLogin;
+use App\Services\Auth\DefaultLogout;
 use Illuminate\Support\ServiceProvider;
 
 class ServiceContainerProvider extends ServiceProvider
@@ -15,6 +16,7 @@ class ServiceContainerProvider extends ServiceProvider
     public function register(): void
     {
         $this->registerService('DefaultLogin', DefaultLogin::class);
+        $this->registerService('DefaultLogout', DefaultLogout::class);
     }
 
     /**

@@ -48,7 +48,7 @@
                                 class="svg-icon"></i></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-right user-dd animated flipInY">
-                        <a class="dropdown-item" href=""><i data-feather="power"
+                        <a class="dropdown-item" href="{{ route('auth.user-logout') }}"><i data-feather="power"
                                 class="svg-icon me-2 ms-1"></i>
                             Logout</a>
                     </div>
