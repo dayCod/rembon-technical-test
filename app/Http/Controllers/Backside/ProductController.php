@@ -54,7 +54,25 @@ class ProductController extends Controller
      */
     public function editProductFormView(string $uuid): View
     {
-        return view('page.produk.edit');
+        $find_product = Produk::with('stokProduk')->where('uuid', $uuid)->first();
+
+        return view('page.produk.edit', compact('find_product'));
+    }
+
+    /**
+     * update specified product record.
+     *
+     * @param CreateAndUpdateProductRequest $request
+     * @param string $uuid
+     * @return RedirectResponse
+     */
+    public function updateProductAction(CreateAndUpdateProductRequest $request, string $uuid): RedirectResponse
+    {
+        $data = $request->validated();
+        $data['produk_uuid'] = $uuid;
+        $process = app('UpdateProduct')->execute($data);
+
+        return redirect()->route('backside.product.index-view')->with('success', $process['message']);
     }
 
     /**

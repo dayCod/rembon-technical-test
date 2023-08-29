@@ -9,7 +9,7 @@ use App\Services\BaseServiceInterface;
 class CreateProduct extends BaseService implements BaseServiceInterface
 {
     /**
-     * create process.
+     * create product process.
      *
      * @param array $dto
      */

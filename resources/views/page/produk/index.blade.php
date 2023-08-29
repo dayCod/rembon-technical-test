@@ -30,7 +30,11 @@
                                     <td class="text-center">{{ $produk->nama }}</td>
                                     <td class="text-center">{{ $produk->stokProduk->stok }}</td>
                                     <td class="text-center">-</td>
-                                    <td class="text-center">-</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('backside.product.edit-view', ['uuid' => $produk->uuid]) }}" class="btn btn-success btn-sm">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                                 @empty
                                 <tr>

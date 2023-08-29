@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Services\Auth\DefaultLogin;
 use App\Services\Auth\DefaultLogout;
 use App\Services\Product\CreateProduct;
+use App\Services\Product\UpdateProduct;
 use App\Services\User\CreateUser;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +24,7 @@ class ServiceContainerProvider extends ServiceProvider
         $this->registerService('CreateUser', CreateUser::class);
 
         $this->registerService('CreateProduct', CreateProduct::class);
+        $this->registerService('UpdateProduct', UpdateProduct::class);
     }
 
     /**

@@ -24,14 +24,15 @@
                     </ul>
                 </div>
                 @endif
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('backside.product.update-action', ['uuid' => $find_product->uuid]) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="form-body">
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label class="form-label">Nama Produk <span class="text-danger">*</span> </label>
                                 <div class="form-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Nama Produk" name="nama" value="{{ old('nama') }}" required>
+                                    <input type="text" class="form-control" placeholder="Nama Produk" name="nama" value="{{ old('nama', $find_product->nama) }}" required>
                                 </div>
                             </div>
                         </div>
@@ -39,7 +40,7 @@
                             <div class="col-md-12">
                                 <label class="form-label">Brand Produk <span class="text-danger">*</span> </label>
                                 <div class="form-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Brand Produk" name="brand" value="{{ old('brand') }}" required>
+                                    <input type="text" class="form-control" placeholder="Brand Produk" name="brand" value="{{ old('brand', $find_product->brand) }}" required>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +48,7 @@
                             <div class="col-md-12">
                                 <label class="form-label">Harga Produk <span class="text-danger">*</span> </label>
                                 <div class="form-group mb-3">
-                                    <input type="number" class="form-control" placeholder="Harga Produk" name="harga" value="{{ old('harga') }}" min="0" required>
+                                    <input type="number" class="form-control" placeholder="Harga Produk" name="harga" value="{{ old('harga', $find_product->harga) }}" min="0" required>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +56,7 @@
                             <div class="col-md-12">
                                 <label class="form-label">Stok Produk <span class="text-danger">*</span> </label>
                                 <div class="form-group mb-3">
-                                    <input type="number" class="form-control" placeholder="Stok Produk" name="stok" value="{{ old('stok') }}" min="0" required>
+                                    <input type="number" class="form-control" placeholder="Stok Produk" name="stok" value="{{ old('stok', $find_product->stokProduk->stok) }}" min="0" required>
                                 </div>
                             </div>
                         </div>

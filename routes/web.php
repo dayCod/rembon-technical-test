@@ -38,6 +38,7 @@ Route::group(['prefix' => 'backside', 'as' => 'backside.', 'middleware' => ['aut
         Route::get('/create', [ProductController::class, 'createProductFormView'])->name('create-view');
         Route::post('/create', [ProductController::class, 'storeProductToProdukTable'])->name('store-action');
         Route::get('/{uuid}/edit', [ProductController::class, 'editProductFormView'])->name('edit-view');
+        Route::put('/{uuid}/update', [ProductController::class, 'updateProductAction'])->name('update-action');
         Route::get('/{uuid}/trash', [ProductController::class, 'trashedProductView'])->name('trash-view');
     });
 });
