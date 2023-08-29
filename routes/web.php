@@ -33,7 +33,7 @@ Route::group(['prefix' => 'backside', 'as' => 'backside.', 'middleware' => ['aut
     Route::get('/dashboard', [DashboardController::class, 'dashboardPageView'])->name('dashboard');
 
     // Product
-    Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
+    Route::group(['prefix' => 'product', 'as' => 'product.', 'middleware' => ['role:seller']], function () {
         Route::get('/', [ProductController::class, 'productIndexView'])->name('index-view');
         Route::get('/create', [ProductController::class, 'createProductFormView'])->name('create-view');
         Route::get('/{uuid}/edit', [ProductController::class, 'editProductFormView'])->name('edit-view');
