@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Backside\DashboardController;
+use App\Http\Controllers\Backside\OrderController;
 use App\Http\Controllers\Backside\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,11 @@ Route::group(['prefix' => 'backside', 'as' => 'backside.', 'middleware' => ['aut
         Route::delete('/{uuid}/delete', [ProductController::class, 'softDeleteProduct'])->name('soft-delete');
         Route::get('/{uuid}/restore', [ProductController::class, 'restoreTrashedProduct'])->name('restore-product');
         Route::delete('/{uuid}/force-delete', [ProductController::class, 'deleteProductPermanently'])->name('force-delete');
+    });
+
+    // Order
+    Route::group(['prefix' => 'order', 'as' => 'order.', 'middleware' => ['role:buyer']], function () {
+        Route::get('/', [OrderController::class, 'orderIndexView'])->name('index-view');
     });
 });
 
