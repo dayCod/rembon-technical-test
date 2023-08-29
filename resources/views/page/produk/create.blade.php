@@ -24,7 +24,7 @@
                     </ul>
                 </div>
                 @endif
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('backside.product.store-action') }}" method="POST">
                     @csrf
                     <div class="form-body">
                         <div class="row mt-3">

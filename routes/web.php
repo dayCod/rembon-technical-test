@@ -36,6 +36,7 @@ Route::group(['prefix' => 'backside', 'as' => 'backside.', 'middleware' => ['aut
     Route::group(['prefix' => 'product', 'as' => 'product.', 'middleware' => ['role:seller']], function () {
         Route::get('/', [ProductController::class, 'productIndexView'])->name('index-view');
         Route::get('/create', [ProductController::class, 'createProductFormView'])->name('create-view');
+        Route::post('/create', [ProductController::class, 'storeProductToProdukTable'])->name('store-action');
         Route::get('/{uuid}/edit', [ProductController::class, 'editProductFormView'])->name('edit-view');
         Route::get('/{uuid}/trash', [ProductController::class, 'trashedProductView'])->name('trash-view');
     });

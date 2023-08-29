@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Produk;
 use App\Models\User;
+use App\Observers\ProdukModelObserver;
 use App\Observers\UserModelObserver;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
@@ -27,8 +29,11 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // User Observer
+        // User Model Observer
         User::observe(UserModelObserver::class);
+
+        // Produk Model Observer
+        Produk::observe(ProdukModelObserver::class);
     }
 
     /**

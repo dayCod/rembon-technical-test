@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Backside;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\CreateProductRequest;
 use App\Models\Produk;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -29,6 +31,19 @@ class ProductController extends Controller
     public function createProductFormView(): View
     {
         return view('page.produk.create');
+    }
+
+    /**
+     * store product data to produk table.
+     *
+     * @param CreateProductRequest $request
+     * @return RedirectResponse
+     */
+    public function storeProductToProdukTable(CreateProductRequest $request): RedirectResponse
+    {
+        $process = app('CreateProduct')->execute($request->validated());
+
+        return redirect()->route('backside.product.index-view')->with('success', $process['message']);
     }
 
     /**
