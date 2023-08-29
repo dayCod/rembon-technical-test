@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nama_depan', 30);
             $table->string('nama_belakang', 30);
             $table->string('alamat', 200)->nullable();
-            $table->string('nomor_hp', 15)->nullable();
+            $table->string('nomor_hp')->nullable();
             $table->enum('jenis_kelamin', ['pria', 'wanita'])->nullable();
             $table->date('tgl_lahir')->nullable();
             $table->enum('role', ['seller', 'buyer']);
