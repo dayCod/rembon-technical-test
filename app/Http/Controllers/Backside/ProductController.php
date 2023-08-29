@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\CreateAndUpdateProductRequest;
 use App\Models\Produk;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -18,9 +19,9 @@ class ProductController extends Controller
      */
     public function productIndexView(): View
     {
-        $kumpulan_produk = Produk::orderBy('id', 'desc')->get();
+        $products = Produk::orderBy('id', 'desc')->get();
 
-        return view('page.produk.index', compact('kumpulan_produk'));
+        return view('page.produk.index', compact('products'));
     }
 
     /**
@@ -76,13 +77,59 @@ class ProductController extends Controller
     }
 
     /**
-     * show list of trashed product.
+     * soft delete specified product.
      *
      * @param string $uuid
+     * @return JsonResponse
+     */
+    public function softDeleteProduct(string $uuid): JsonResponse
+    {
+        $process = app('SoftDeleteProduct')->execute([
+            'produk_uuid' => $uuid,
+        ]);
+
+        return response()->json(['success' => $process['message']]);
+    }
+
+    /**
+     * show list of trashed product.
+     *
      * @return View
      */
-    public function trashedProductView(string $uuid): View
+    public function trashedProductView(): View
     {
-        return view('page.produk.trashed-product');
+        $trashed_products_data = Produk::onlyTrashed()->get();
+
+        return view('page.produk.trashed-product', compact('trashed_products_data'));
+    }
+
+    /**
+     * restore trashed product data.
+     *
+     * @param string $uuid
+     * @return RedirectResponse
+     */
+    public function restoreTrashedProduct(string $uuid): RedirectResponse
+    {
+        $process = app('RestoreProduct')->execute([
+            'produk_uuid' => $uuid,
+        ]);
+
+        return redirect()->route('backside.product.index-view')->with('success', $process['message']);
+    }
+
+    /**
+     * delete specified product permanently.
+     *
+     * @param string $uuid
+     * @return JsonResponse
+     */
+    public function deleteProductPermanently(string $uuid): JsonResponse
+    {
+        $process = app('DeleteProductPermanently')->execute([
+            'produk_uuid' => $uuid,
+        ]);
+
+        return response()->json(['success' => $process['message']]);
     }
 }

@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
                         <h4 class="card-title">Tong Sampah</h4>
                         <a href="{{ route('backside.product.index-view') }}" class="btn btn-secondary">
                             <i class="fa fa-arrow-left"></i>
@@ -25,13 +25,25 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse($trashed_products_data as $product)
                                 <tr>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td class="text-center">{{ $product->uuid }}</td>
+                                    <td class="text-center">{{ $product->nama }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('backside.product.restore-product', ['uuid' => $product->uuid]) }}" class="btn btn-primary btn-sm">
+                                            Pulihkan
+                                        </a>
+                                        <a href="{{ route('backside.product.force-delete', ['uuid' => $product->uuid]) }}" class="btn btn-danger btn-sm btn-delete">
+                                            Hapus Permanen
+                                        </a>
+                                    </td>
                                 </tr>
+                                @empty
+                                <tr>
+                                    <td class="text-center" colspan="4">{{ __('Data Kosong') }}</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                             <tfoot>
                                 <tr>

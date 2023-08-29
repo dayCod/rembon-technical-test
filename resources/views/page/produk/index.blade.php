@@ -11,6 +11,9 @@
                         <a href="{{ route('backside.product.create-view') }}" class="btn btn-info">
                             <i class="fa fa-plus-circle"></i>
                         </a>
+                        <a href="{{ route('backside.product.trash-view') }}" class="btn btn-secondary">
+                            Tong Sampah
+                        </a>
                     </div>
                     <div class="table-responsive">
                         <table id="zero_config" class="table border table-striped table-bordered text-nowrap">
@@ -24,15 +27,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($kumpulan_produk as $produk)
+                                @forelse($products as $product)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td class="text-center">{{ $produk->nama }}</td>
-                                    <td class="text-center">{{ $produk->stokProduk->stok }}</td>
+                                    <td class="text-center">{{ $product->nama }}</td>
+                                    <td class="text-center">{{ $product->stokProduk->stok }}</td>
                                     <td class="text-center">-</td>
                                     <td class="text-center">
-                                        <a href="{{ route('backside.product.edit-view', ['uuid' => $produk->uuid]) }}" class="btn btn-success btn-sm">
+                                        <a href="{{ route('backside.product.edit-view', ['uuid' => $product->uuid]) }}" class="btn btn-success btn-sm">
                                             <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="{{ route('backside.product.soft-delete', ['uuid' => $product->uuid]) }}" class="btn btn-danger btn-sm btn-delete">
+                                            <i class="fa fa-trash"></i>
                                         </a>
                                     </td>
                                 </tr>
