@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class User extends Authenticatable
 {
+    use Notifiable;
+
     /**
      * The table associated with the model.
      *
@@ -26,4 +29,14 @@ class User extends Model
      * @var array<int, string>
      */
     protected $guarded = ['id'];
+
+    /**
+     * get user full name.
+     *
+     * @return string
+     */
+    public function getFullName(): string
+    {
+        return $this->nama_depan.' '.$this->nama_belakang;
+    }
 }

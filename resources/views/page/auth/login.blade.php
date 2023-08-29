@@ -10,10 +10,12 @@
                     <h3 class="text-uppercase mb-4 text-center">az product - login</h3>
                     @if (session()->has('errors'))
                         <div class="alert alert-danger">
-                            {{ session()->pull('errors') }}
+                            @foreach($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
                         </div>
                     @endif
-                    <form action="" method="POST">
+                    <form action="{{ route('auth.authenticate-user') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label for="">Email</label>

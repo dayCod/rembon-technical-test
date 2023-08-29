@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
     Route::middleware(['guest'])->group(function () {
         Route::get('/login', [LoginController::class, 'loginFormView'])->name('login-view');
+        Route::post('/login', [LoginController::class, 'authenticateCredential'])->name('authenticate-user');
         Route::get('/register', [RegisterController::class, 'registerFormView'])->name('register-view');
     });
 });
@@ -24,8 +25,8 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
 | Backside Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['prefix' => 'backside', 'as' => 'backside.'], function () {
-    Route::get('/dashboard', [DashboardController::class, 'dashboardPageView'])->name('index');
+Route::group(['prefix' => 'backside', 'as' => 'backside.', 'middleware' => ['auth']], function () {
+    Route::get('/dashboard', [DashboardController::class, 'dashboardPageView'])->name('dashboard');
 
     // Product
     Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
