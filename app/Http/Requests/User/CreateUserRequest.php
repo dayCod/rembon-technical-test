@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class CreateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,12 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email', 'exists:user,email'],
+            'nama_depan' => ['required', 'max:30', 'string'],
+            'nama_belakang' => ['required', 'max:30', 'string'],
+            'email' => ['required', 'email', 'unique:user,email'],
             'password' => ['required', 'string', 'min:6'],
+            'nomor_hp' => ['required', 'regex:/\(?(?:\+62|62|0)(?:\d{2,3})?\)?[ .-]?\d{2,4}[ .-]?\d{2,4}[ .-]?\d{2,4}/', 'min:9', 'max:15'],
+            'role' => ['required'],
         ];
     }
 
@@ -36,11 +40,12 @@ class LoginRequest extends FormRequest
     {
         return [
             'required' => ':attribute Tidak Boleh Kosong',
-            'email' => ':attribute Harus Menggunakan Format Email yang Valid',
-            'exists' => ':attribute Tidak Terdaftar Di Catatan Database Kami',
-            'min' => ':attribute harus setidaknya mengandung :min Karakter',
+            'max' => ':attribute Tidak Boleh Melebihi :max Karakter',
             'string' => ':attribute Harus Bertipe Data String',
+            'email' => ':attribute Harus Menggunakan Format Email yang Valid',
+            'min' => ':attribute harus setidaknya mengandung :min Karakter',
+            'unique' => ':attribute Sudah Terdaftar',
+            'regex' => ':attrbute Harus Berformat Nomor Indonesia yang Valid',
         ];
     }
-
 }

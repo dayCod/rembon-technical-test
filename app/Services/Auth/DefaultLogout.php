@@ -23,12 +23,12 @@ class DefaultLogout extends BaseService implements BaseServiceInterface
 
             $this->results['response_code'] = 200;
             $this->results['success'] = true;
-            $this->results['message'] = "Successfully Logout";
+            $this->results['message'] = "Logout Berhasil";
             $this->results['data'] = ['email' => $find_authenticated_user->email];
         } else {
             $this->results['response_code'] = 404;
             $this->results['success'] = false;
-            $this->results['message'] = "User Not Found";
+            $this->results['message'] = "User Tidak Ditemukan";
             $this->results['data'] = [];
         }
     }

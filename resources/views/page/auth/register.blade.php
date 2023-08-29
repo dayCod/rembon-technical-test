@@ -13,35 +13,47 @@
                             {{ session()->pull('fail') }}
                         </div>
                     @endif
-                    <form action="" method="POST">
+                    <form action="{{ route('auth.register-action') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <div class="row">
                                 <div class="col-6">
                                     <label for="">Nama Depan</label>
-                                    <input type="text" class="form-control" name="name">
+                                    <input type="text" class="form-control" name="nama_depan" required>
                                 </div>
                                 <div class="col-6">
                                     <label for="">Nama Belakang</label>
-                                    <input type="text" class="form-control" name="name">
+                                    <input type="text" class="form-control" name="nama_belakang" required>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="">Email</label>
-                            <input type="email" class="form-control" name="email">
+                            <input type="email" class="form-control" name="email" required>
                         </div>
                         <div class="mb-3">
                             <label for="">Password</label>
-                            <input type="password" class="form-control" name="password">
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="mb-3">
-                            <label for="">Phone Number</label>
-                            <input type="tel" class="form-control" name="phone_number">
+                            <label for="">Nomor Handphone</label>
+                            <input type="tel" class="form-control" name="nomor_hp" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="">Pilih Peran</label>
+                            <select name="role" class="form-control" required>
+                                <option value="" selected hidden>Pilih Peran</option>
+                                <option value="seller">Seller</option>
+                                <option value="buyer">Buyer</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-info text-white">Register</button>
+                            </div>
+                            <div class="d-flex justify-content-between mt-3">
+                                <div></div>
+                                <a href="{{ route('auth.login-view') }}">Already Have an Account? Login Here</a>
                             </div>
                         </div>
                     </form>

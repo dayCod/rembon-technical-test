@@ -23,6 +23,7 @@ class LoginController extends Controller
     /**
      * authenticate the users credential.
      *
+     * @param LoginRequest $request
      * @return View
      */
     public function authenticateCredential(LoginRequest $request): RedirectResponse

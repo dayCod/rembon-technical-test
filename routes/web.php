@@ -18,10 +18,10 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
         Route::get('/login', [LoginController::class, 'loginFormView'])->name('login-view');
         Route::post('/login', [LoginController::class, 'authenticateCredential'])->name('authenticate-user');
         Route::get('/register', [RegisterController::class, 'registerFormView'])->name('register-view');
+        Route::post('/register', [RegisterController::class, 'registUserAndStoreToUserTable'])->name('register-action');
     });
-    Route::middleware(['auth'])->group(function () {
-        Route::get('/logout', [LogoutController::class, 'authenticatedUserLogout'])->name('user-logout');
-    });
+
+    Route::get('/logout', [LogoutController::class, 'authenticatedUserLogout'])->middleware(['auth'])->name('user-logout');
 });
 
 /*

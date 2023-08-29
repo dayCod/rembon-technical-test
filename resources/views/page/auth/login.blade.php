@@ -19,15 +19,19 @@
                         @csrf
                         <div class="mb-3">
                             <label for="">Email</label>
-                            <input type="email" class="form-control" name="email">
+                            <input type="email" class="form-control" name="email" required>
                         </div>
                         <div class="mb-3">
                             <label for="">Password</label>
-                            <input type="password" class="form-control" name="password">
+                            <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="mb-3">
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-info text-white">Login</button>
+                            </div>
+                            <div class="d-flex justify-content-between mt-3">
+                                <div></div>
+                                <a href="{{ route('auth.register-view') }}">Don't Have an Account? Register Here</a>
                             </div>
                         </div>
                     </form>

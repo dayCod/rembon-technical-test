@@ -31,12 +31,21 @@ class User extends Authenticatable
     protected $guarded = ['id'];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'password' => 'hashed',
+    ];
+
+    /**
      * get user full name.
      *
      * @return string
      */
     public function getFullName(): string
     {
-        return $this->nama_depan.' '.$this->nama_belakang;
+        return $this->nama_depan . ' ' . $this->nama_belakang;
     }
 }
