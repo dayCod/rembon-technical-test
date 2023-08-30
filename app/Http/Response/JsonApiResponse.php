@@ -16,7 +16,7 @@ class JsonApiResponse
      *
      * @return JsonResponse
      */
-    private static function response(int $response_code = 200, bool $success = false, string|array $message = "", array $data = []){
+    public static function response(int $response_code = 200, bool $success = false, string|array $message = "", array $data = []){
         return response()->json(array(
             'response_code' => $response_code,
             'success' => $success,

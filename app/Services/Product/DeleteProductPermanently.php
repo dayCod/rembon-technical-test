@@ -22,8 +22,8 @@ class DeleteProductPermanently extends BaseService implements BaseServiceInterfa
 
             $this->results['response_code'] = 200;
             $this->results['success'] = true;
-            $this->results['message'] = 'Produk Berhasil Dihapus';
-            $this->results['data'] = $find_product;
+            $this->results['message'] = 'Produk Berhasil Dihapus Secara Permanen';
+            $this->results['data'] = ['uuid' => $dto['produk_uuid']];
         } else {
             $this->results['response_code'] = 404;
             $this->results['success'] = false;
