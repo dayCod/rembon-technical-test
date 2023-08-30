@@ -76,6 +76,11 @@ class OrderController extends Controller
      */
     public function editOrderFormView(string $uuid): View
     {
+        // Not Allowed if Status is'nt Pending
+        if (Pesanan::where('uuid', $uuid)->first()->getOrderStatus() != "Pending") {
+            abort(401);
+        }
+
         $products = Produk::with('stokProduk')->orderBy('id', 'desc')->get()->filter(function ($value) {
             return $value->stokProduk->stok > 0;
         })->values();
@@ -94,6 +99,11 @@ class OrderController extends Controller
      */
     public function updateProductAction(CreateAndUpdateOrderRequest $request, string $uuid): RedirectResponse
     {
+        // Not Allowed if Status is'nt Pending
+        if (Pesanan::where('uuid', $uuid)->first()->getOrderStatus() != "Pending") {
+            abort(401);
+        }
+
         DB::beginTransaction();
 
         try {
@@ -151,6 +161,11 @@ class OrderController extends Controller
      */
     public function deleteSpecificOrder(string $uuid): JsonResponse
     {
+        // Not Allowed if Status is'nt Pending
+        if (Pesanan::where('uuid', $uuid)->first()->getOrderStatus() == "Pending") {
+            abort(401);
+        }
+
         $process = app('DeleteOrder')->execute([
             'pesanan_uuid' => $uuid,
         ]);

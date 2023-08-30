@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -47,5 +49,15 @@ class User extends Authenticatable
     public function getFullName(): string
     {
         return $this->nama_depan . ' ' . $this->nama_belakang;
+    }
+
+    /**
+     * has one relation between user and order.
+     *
+     * @return HasManyRelation
+     */
+    public function pesanan(): HasMany
+    {
+        return $this->hasMany(Pesanan::class, 'user_id', 'id');
     }
 }
