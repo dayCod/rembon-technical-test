@@ -52,7 +52,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td class="text-center" colspan="7">{{ __('Data Kosong') }}</td>
+                                    <td class="text-center" colspan="8">{{ __('Data Kosong') }}</td>
                                 </tr>
                                 @endforelse
                             </tbody>

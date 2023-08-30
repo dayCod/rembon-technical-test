@@ -90,6 +90,10 @@ class OrderController extends Controller
      */
     public function updateOrderStatusToPaid(string $uuid): RedirectResponse
     {
-        return redirect();
+        $process = app('PaidOrder')->execute([
+            'pesanan_uuid' => $uuid,
+        ]);
+
+        return redirect()->route('backside.order.index-view')->with('success', $process['message']);
     }
 }

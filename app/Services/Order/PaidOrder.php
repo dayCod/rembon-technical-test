@@ -2,6 +2,7 @@
 
 namespace App\Services\Order;
 
+use App\Models\Produk;
 use App\Models\Pesanan;
 use App\Services\BaseService;
 use App\Services\BaseServiceInterface;
@@ -15,9 +16,22 @@ class PaidOrder extends BaseService implements BaseServiceInterface
      */
     public function process(array $dto)
     {
-        $find_order = Pesanan::where('uuid', $dto['pesanan_uuid'])->first();
+        $find_order = Pesanan::with('produkPesanan')->where('uuid', $dto['pesanan_uuid'])->first();
 
         if (!empty($find_order)) {
+
+            $group_order_by_of_his_product = $find_order->produkPesanan->groupBy('produk_id')->mapWithKeys(function ($item, $key) {
+                return [
+                    $key => collect($item)->sum('jumlah'),
+                ];
+            });
+            $group_order_by_of_his_product->each(function ($product_amount, $product_id) {
+                $find_related_product = Produk::with('stokProduk')->where('id', $product_id)->first();
+                $find_related_product->stokProduk->update([
+                    'stok' => $find_related_product->stokProduk->stok - $product_amount,
+                ]);
+            });
+
             $find_order->update([
                 'tgl_pembayaran_lunas' => now(),
                 'tgl_dibatalkan' => null,
