@@ -65,7 +65,7 @@
                         <div class="text-end">
                             <button type="submit" class="btn btn-info">
                                 <i class="fas fa-edit"></i>
-                                {{ __('Submit') }}
+                                {{ __('Update') }}
                             </button>
                         </div>
                     </div>

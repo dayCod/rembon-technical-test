@@ -25,6 +25,7 @@ class PaidOrder extends BaseService implements BaseServiceInterface
                     $key => collect($item)->sum('jumlah'),
                 ];
             });
+
             $group_order_by_of_his_product->each(function ($product_amount, $product_id) {
                 $find_related_product = Produk::with('stokProduk')->where('id', $product_id)->first();
                 $find_related_product->stokProduk->update([

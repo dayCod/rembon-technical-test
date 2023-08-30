@@ -69,6 +69,52 @@ class OrderController extends Controller
     }
 
     /**
+     * show specified order view.
+     *
+     * @param string $uuid
+     * @return View
+     */
+    public function editOrderFormView(string $uuid): View
+    {
+        $products = Produk::with('stokProduk')->orderBy('id', 'desc')->get()->filter(function ($value) {
+            return $value->stokProduk->stok > 0;
+        })->values();
+
+        $find_order = Pesanan::with('produkPesanan')->where('uuid', $uuid)->first();
+
+        return view('page.pesanan.edit', compact('find_order', 'products'));
+    }
+
+    /**
+     * update specified order record.
+     *
+     * @param CreateAndUpdateOrderRequest $request
+     * @param string $uuid
+     * @return RedirectResponse
+     */
+    public function updateProductAction(CreateAndUpdateOrderRequest $request, string $uuid): RedirectResponse
+    {
+        DB::beginTransaction();
+
+        try {
+            $data = $request->validated();
+            $data['pesanan_uuid'] = $uuid;
+            $data['buyer_id'] = auth()->id();
+
+            $process = app('UpdateOrder')->execute($data);
+            DB::commit();
+
+            return redirect()->route('backside.order.index-view')->with('success', $process['message']);
+
+        } catch (\Exception $ex) {
+
+            DB::rollBack();
+            dd($ex->getMessage());
+
+        }
+    }
+
+    /**
      * update order status to cancel
      *
      * @param string $uuid

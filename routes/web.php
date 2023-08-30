@@ -58,6 +58,8 @@ Route::group(['prefix' => 'backside', 'as' => 'backside.', 'middleware' => ['aut
         Route::get('/', [OrderController::class, 'orderIndexView'])->name('index-view');
         Route::get('/create', [OrderController::class, 'createOrderFormView'])->name('create-view');
         Route::post('/create', [OrderController::class, 'storeOrderToPesananAndProdukPesananTable'])->name('store-action');
+        Route::get('/{uuid}/edit', [OrderController::class, 'editOrderFormView'])->name('edit-view');
+        Route::put('/{uuid}/update', [OrderController::class, 'updateProductAction'])->name('update-action');
         Route::get('/{uuid}/cancel', [OrderController::class, 'updateOrderStatusToCancel'])->name('cancel-action');
         Route::get('/{uuid}/paid-off', [OrderController::class, 'updateOrderStatusToPaid'])->name('paid-off-action');
         Route::delete('/{uuid}/delete', [OrderController::class, 'deleteSpecificOrder'])->name('delete-action');

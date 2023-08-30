@@ -8,6 +8,7 @@ use App\Services\Order\CancelOrder;
 use App\Services\Order\CreateOrder;
 use App\Services\Order\DeleteOrder;
 use App\Services\Order\PaidOrder;
+use App\Services\Order\UpdateOrder;
 use App\Services\Product\CreateProduct;
 use App\Services\Product\DeleteProductPermanently;
 use App\Services\Product\RestoreProduct;
@@ -37,6 +38,7 @@ class ServiceContainerProvider extends ServiceProvider
         $this->registerService('DeleteProductPermanently', DeleteProductPermanently::class);
 
         $this->registerService('CreateOrder', CreateOrder::class);
+        $this->registerService('UpdateOrder', UpdateOrder::class);
         $this->registerService('PaidOrder', PaidOrder::class);
         $this->registerService('CancelOrder', CancelOrder::class);
         $this->registerService('DeleteOrder', DeleteOrder::class);

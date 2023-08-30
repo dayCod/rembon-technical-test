@@ -24,17 +24,20 @@
                             </ul>
                         </div>
                     @endif
-                    <form action="" method="POST">
+                    <form action="{{ route('backside.order.update-action', ['uuid' => $find_order->uuid]) }}" method="POST">
                         @csrf
+                        @method('PUT')
+                        <input type="hidden" id="products" value="{{ json_encode($products->toArray()) }}">
                         <div class="form-body">
+                            @foreach($find_order->produkPesanan as $product_order)
                             <div class="row answer-section mt-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Pilih Produk <span class="text-danger">*</span> </label>
                                     <div class="form-group mb-3">
-                                        <select class="form-control" name="produk_id">
+                                        <select class="form-control" name="produk_id[]">
                                             <option value="" selected hidden>Pilih Produk</option>
                                             @foreach ($products as $product)
-                                                <option value="{{ $product->id }}" @selected(old('produk_id') == $product->id)>
+                                                <option value="{{ $product->id }}" {{ $product_order->produk_id == $product->id ? 'selected' : '' }}>
                                                     {{ $product->nama.' - Sisa Stok: '.$product->stokProduk->stok }}
                                                 </option>
                                             @endforeach
@@ -45,11 +48,12 @@
                                     <label class="form-label">Jumlah Yang Ingin Dipesan <span class="text-danger">*</span> </label>
                                     <div class="form-group mb-3">
                                         <div class="form-group mb-3">
-                                            <input type="number" placeholder="Jumlah Yang Ingin Dipesan" class="form-control" placeholder="jumlah" name="jumlah" value="{{ old('jumlah') }}" min="0" required>
+                                            <input type="number" placeholder="Jumlah Yang Ingin Dipesan" class="form-control" placeholder="jumlah" name="jumlah[]" value="{{ $product_order->jumlah }}" min="0" required>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            @endforeach
                             <div id="answer-section-divider"></div>
                             <div class="my-3" id="btn-actions-group">
                                 <button type="button" class="btn btn-success rounded-circle btn-actions" id="increase">
@@ -64,7 +68,7 @@
                                 <div class="text-end">
                                     <button type="submit" class="btn btn-info">
                                         <i class="fas fa-edit"></i>
-                                        {{ __('Submit') }}
+                                        {{ __('Update') }}
                                     </button>
                                 </div>
                             </div>
