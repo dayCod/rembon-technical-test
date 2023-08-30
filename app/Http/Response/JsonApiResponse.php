@@ -3,9 +3,8 @@
 namespace App\Http\Response;
 
 use App\Constants\StatusCode;
-use App\Http\Response\JsonResponse as JsonResponses;
 
-class JsonResponse
+class JsonApiResponse
 {
     /**
      * initialized response formation
@@ -19,6 +18,7 @@ class JsonResponse
      */
     private static function response(int $response_code = 200, bool $success = false, string $message = "", array $data = []){
         return response()->json(array(
+            'response_code' => $response_code,
             'success' => $success,
             'message' => $message,
             'data' => $data,
@@ -33,7 +33,7 @@ class JsonResponse
      *
      * @return JsonResponse
      */
-    public static function success(string $message = "", array $data): JsonResponses
+    public static function success(string $message = "", array $data)
     {
         return self::response(StatusCode::SUCCESS, true, $message, $data);
     }
@@ -46,7 +46,7 @@ class JsonResponse
      *
      * @return JsonResponse
      */
-    public static function badRequest(string $message = "", array $data): JsonResponses
+    public static function badRequest(string $message = "", array $data)
     {
         return self::response(StatusCode::BAD_REQUEST, true, $message, $data);
     }
@@ -59,7 +59,7 @@ class JsonResponse
      *
      * @return JsonResponse
      */
-    public static function unprocessableEntity(string $message = "", array $data): JsonResponses
+    public static function unprocessableEntity(string $message = "", array $data)
     {
         return self::response(StatusCode::UNPROCESSABLE_ENTITY, true, $message, $data);
     }
@@ -72,7 +72,7 @@ class JsonResponse
      *
      * @return JsonResponse
      */
-    public static function internalServerError(string $message = "", array $data): JsonResponses
+    public static function internalServerError(string $message = "", array $data)
     {
         return self::response(StatusCode::INTERNAL_SERVER_ERR, true, $message, $data);
     }
@@ -85,7 +85,7 @@ class JsonResponse
      *
      * @return JsonResponse
      */
-    public static function notFound(string $message = "", array $data): JsonResponses
+    public static function notFound(string $message = "", array $data)
     {
         return self::response(StatusCode::NOT_FOUND, true, $message, $data);
     }
@@ -98,7 +98,7 @@ class JsonResponse
      *
      * @return JsonResponse
      */
-    public static function unauthorized(string $message = "", array $data): JsonResponses
+    public static function unauthorized(string $message = "", array $data)
     {
         return self::response(StatusCode::UNAUTHORIZED, true, $message, $data);
     }

@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Services\Auth\DefaultLogin;
 use App\Services\Auth\DefaultLogout;
+use App\Services\Auth\LoginWithOauthToken;
+use App\Services\Auth\LogoutFromOauthToken;
 use App\Services\Order\CancelOrder;
 use App\Services\Order\CreateOrder;
 use App\Services\Order\DeleteOrder;
@@ -28,6 +30,8 @@ class ServiceContainerProvider extends ServiceProvider
     {
         $this->registerService('DefaultLogin', DefaultLogin::class);
         $this->registerService('DefaultLogout', DefaultLogout::class);
+        $this->registerService('LoginWithOauthToken', LoginWithOauthToken::class);
+        $this->registerService('LogoutFromOauthToken', LogoutFromOauthToken::class);
 
         $this->registerService('CreateUser', CreateUser::class);
 

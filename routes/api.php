@@ -1,14 +1,21 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\Auth\LogoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| Auth Routes
 |--------------------------------------------------------------------------
 */
+Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
+    Route::middleware(['guest:api'])->group(function () {
+        Route::post('/login', [LoginController::class, 'authenticateCredential']);
+    });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::get('/logout', [LogoutController::class, 'authenticatedUserLogout'])->middleware(['auth:api']);
 });
+
+

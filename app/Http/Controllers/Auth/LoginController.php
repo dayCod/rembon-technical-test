@@ -24,7 +24,7 @@ class LoginController extends Controller
      * authenticate the users credential.
      *
      * @param LoginRequest $request
-     * @return View
+     * @return RedirectResponse
      */
     public function authenticateCredential(LoginRequest $request): RedirectResponse
     {
