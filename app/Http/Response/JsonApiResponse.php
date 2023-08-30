@@ -11,12 +11,12 @@ class JsonApiResponse
      *
      * @param int $response_code
      * @param bool $success
-     * @param string $message
+     * @param string|array $message
      * @param array $data
      *
      * @return JsonResponse
      */
-    private static function response(int $response_code = 200, bool $success = false, string $message = "", array $data = []){
+    private static function response(int $response_code = 200, bool $success = false, string|array $message = "", array $data = []){
         return response()->json(array(
             'response_code' => $response_code,
             'success' => $success,
@@ -28,12 +28,12 @@ class JsonApiResponse
     /**
      * set response when its success
      *
-     * @param string $message
+     * @param string|array $message
      * @param array $data
      *
      * @return JsonResponse
      */
-    public static function success(string $message = "", array $data)
+    public static function success(string|array $message = "", array $data)
     {
         return self::response(StatusCode::SUCCESS, true, $message, $data);
     }
@@ -41,12 +41,12 @@ class JsonApiResponse
     /**
      * set response when its bad request
      *
-     * @param string $message
+     * @param string|array $message
      * @param array $data
      *
      * @return JsonResponse
      */
-    public static function badRequest(string $message = "", array $data)
+    public static function badRequest(string|array $message = "", array $data)
     {
         return self::response(StatusCode::BAD_REQUEST, true, $message, $data);
     }
@@ -54,12 +54,12 @@ class JsonApiResponse
     /**
      * set response when its unprocessable entity
      *
-     * @param string $message
+     * @param string|array $message
      * @param array $data
      *
      * @return JsonResponse
      */
-    public static function unprocessableEntity(string $message = "", array $data)
+    public static function unprocessableEntity(string|array $message = "", array $data)
     {
         return self::response(StatusCode::UNPROCESSABLE_ENTITY, true, $message, $data);
     }
@@ -67,12 +67,12 @@ class JsonApiResponse
     /**
      * set response when its internal server error
      *
-     * @param string $message
+     * @param string|array $message
      * @param array $data
      *
      * @return JsonResponse
      */
-    public static function internalServerError(string $message = "", array $data)
+    public static function internalServerError(string|array $message = "", array $data)
     {
         return self::response(StatusCode::INTERNAL_SERVER_ERR, true, $message, $data);
     }
@@ -80,12 +80,12 @@ class JsonApiResponse
     /**
      * set response when its not found
      *
-     * @param string $message
+     * @param string|array $message
      * @param array $data
      *
      * @return JsonResponse
      */
-    public static function notFound(string $message = "", array $data)
+    public static function notFound(string|array $message = "", array $data)
     {
         return self::response(StatusCode::NOT_FOUND, true, $message, $data);
     }
@@ -93,12 +93,12 @@ class JsonApiResponse
     /**
      * set response when its unauthorized
      *
-     * @param string $message
+     * @param string|array $message
      * @param array $data
      *
      * @return JsonResponse
      */
-    public static function unauthorized(string $message = "", array $data)
+    public static function unauthorized(string|array $message = "", array $data)
     {
         return self::response(StatusCode::UNAUTHORIZED, true, $message, $data);
     }
