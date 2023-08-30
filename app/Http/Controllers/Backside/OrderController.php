@@ -132,6 +132,11 @@ class OrderController extends Controller
      */
     public function updateOrderStatusToCancel(string $uuid): RedirectResponse
     {
+        // Not Allowed if Status is'nt Pending
+        if (Pesanan::where('uuid', $uuid)->first()->getOrderStatus() != "Pending") {
+            abort(401);
+        }
+
         $process = app('CancelOrder')->execute([
             'pesanan_uuid' => $uuid,
         ]);
@@ -147,6 +152,11 @@ class OrderController extends Controller
      */
     public function updateOrderStatusToPaid(string $uuid): RedirectResponse
     {
+        // Not Allowed if Status is'nt Pending
+        if (Pesanan::where('uuid', $uuid)->first()->getOrderStatus() != "Pending") {
+            abort(401);
+        }
+
         $process = app('PaidOrder')->execute([
             'pesanan_uuid' => $uuid,
         ]);
