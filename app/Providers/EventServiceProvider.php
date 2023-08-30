@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Pesanan;
 use App\Models\Produk;
+use App\Models\ProdukPesanan;
 use App\Models\StokProduk;
 use App\Models\User;
+use App\Observers\PesananModelObserver;
 use App\Observers\ProdukModelObserver;
+use App\Observers\ProdukPesananModelObserver;
 use App\Observers\StokProdukModelObserver;
 use App\Observers\UserModelObserver;
 use Illuminate\Support\Facades\Event;
@@ -39,6 +43,12 @@ class EventServiceProvider extends ServiceProvider
 
         // Stok Produk Model Observer
         StokProduk::observe(StokProdukModelObserver::class);
+
+        // Pesanan Model Observer
+        Pesanan::observe(PesananModelObserver::class);
+
+        // Produk Pesanan Model Observer
+        ProdukPesanan::observe(ProdukPesananModelObserver::class);
     }
 
     /**

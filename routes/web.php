@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
+| Default Redirected Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/', function () { return redirect()->route('auth.login-view'); })->middleware(['guest']);
+
+/*
+|--------------------------------------------------------------------------
 | Auth Routes
 |--------------------------------------------------------------------------
 */
@@ -49,6 +56,10 @@ Route::group(['prefix' => 'backside', 'as' => 'backside.', 'middleware' => ['aut
     // Order
     Route::group(['prefix' => 'order', 'as' => 'order.', 'middleware' => ['role:buyer']], function () {
         Route::get('/', [OrderController::class, 'orderIndexView'])->name('index-view');
+        Route::get('/create', [OrderController::class, 'createOrderFormView'])->name('create-view');
+        Route::post('/create', [OrderController::class, 'storeOrderToPesananAndProdukPesananTable'])->name('store-action');
+        Route::get('/{uuid}/cancel', [OrderController::class, 'updateOrderStatusToCancel'])->name('cancel-action');
+        Route::get('/{uuid}/paid-off', [OrderController::class, 'updateOrderStatusToPaid'])->name('paid-off-action');
     });
 });
 

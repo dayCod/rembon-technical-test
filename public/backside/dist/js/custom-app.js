@@ -13,7 +13,7 @@ $(document).ready(function () {
 
             var fullText = val.innerText
 
-            val.innerText = val.innerText.substr(0, 30)+'...'
+            val.innerText = val.innerText.substr(0, 30) + '...'
 
             val.append(showMore[0])
 
@@ -29,7 +29,7 @@ $(document).ready(function () {
 
                 } else if (selectedElemClass == 'show-less') {
 
-                    val.innerText = fullText.substr(0, 30)+'...'
+                    val.innerText = fullText.substr(0, 30) + '...'
 
                     val.append(showMore[0])
 
@@ -43,86 +43,55 @@ $(document).ready(function () {
     // ==============================================================
     // This is for increase / decrease answers
     // ==============================================================
-    if ( $('div.row.answer-section').length == 1 ) $('button#decrease').attr('disabled', 'disabled')
+    let productsData = JSON.parse($('#products').val())
+    if ($('div.row.answer-section').length == 1) $('button#decrease').attr('disabled', 'disabled')
 
     $('#btn-actions-group > .btn-actions').click(function (e) {
-        if ( $(this).attr('id') == "increase" ) {
+        if ($(this).attr('id') == "increase") {
 
             $('button#decrease').removeAttr('disabled')
 
             let index = $('div.row.answer-section').length
-            let alphabet = String.fromCharCode( (index + 1) + 64 )
-            let asmntType = $('input[name="asmnt_type"]').val()
+            let alphabet = String.fromCharCode((index + 1) + 64)
 
             let formGroupHtml = '';
 
-            if (asmntType == "score") {
-                console.log('score')
-                formGroupHtml = `
-                <div class="row answer-section">
-                    <div class="col-md-1">
-                        <label class="form-label"># </label>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" placeholder="Alphabet" name="alphabet[]" value="${alphabet}" style="cursor: not-allowed" readonly>
-                        </div>
+            formGroupHtml = `
+            <div class="row answer-section mt-3">
+                <div class="col-md-6">
+                    <label class="form-label">Pilih Produk <span class="text-danger">*</span> </label>
+                    <div class="form-group mb-3">
+                        <select class="form-control" name="produk_id[]">
+                            <option value="" selected hidden>Pilih Produk</option>
+                            ${productsData.map(product =>
+                                `<option value="${product.id}">${product.nama} Stok Sisa: ${product.stok_produk.stok}</option>`
+                            ).join('')}
+                        </select>
                     </div>
-                    <div class="col-md-7">
-                        <label class="form-label">Answer <span class="text-danger">*</span> </label>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Jumlah Yang Ingin Dipesan <span class="text-danger">*</span> </label>
+                    <div class="form-group mb-3">
                         <div class="form-group mb-3">
-                            <input type="text" class="form-control" placeholder="Answer" name="answer[]" required>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Score <span class="text-danger">*</span> </label>
-                        <div class="form-group mb-3">
-                            <input type="number" min="1" class="form-control" placeholder="Score" name="score[]" required>
+                            <input type="number" placeholder="Jumlah Yang Ingin Dipesan" class="form-control" placeholder="jumlah" name="jumlah[]" min="0" required>
                         </div>
                     </div>
                 </div>
-                `
-
-            } else if (asmntType == "corrections") {
-                console.log('corrections')
-                formGroupHtml = `
-                <div class="row answer-section">
-                    <div class="col-md-1">
-                        <label class="form-label"># </label>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" placeholder="Alphabet" name="alphabet[]" value="${alphabet}" style="cursor: not-allowed" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-7">
-                        <label class="form-label">Answer <span class="text-danger">*</span> </label>
-                        <div class="form-group mb-3">
-                            <input type="text" class="form-control" placeholder="Answer" name="answer[]" required>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Is Correct ? <span class="text-danger">*</span> </label>
-                        <div class="form-group mb-3">
-                            <select class="form-control" name="is_correct[]" required>
-                                <option value="" selected hidden>Select The Corrections</option>
-                                <option value="1">Yes, Correct Answer!</option>
-                                <option value="0">No, It's Not Correct!</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                `
-            }
+            </div>
+            `
 
             $(formGroupHtml).insertBefore('#answer-section-divider')
 
             if (alphabet == "Y") $('button#increase').attr('disabled', 'disabled')
 
-        } else if ( $(this).attr('id') == "decrease" ) {
+        } else if ($(this).attr('id') == "decrease") {
 
             $('button#decrease').removeAttr('disabled')
 
             let index = $("div.row.answer-section").length;
-            if( (index - 1) == 1 ) {
+            if ((index - 1) == 1) {
                 $('button#decrease').attr('disabled', 'disabled')
-            } else if ( index == 25 ) {
+            } else if (index == 25) {
                 $('button#increase').removeAttr('disabled')
             }
             console.log(index)
@@ -143,8 +112,8 @@ $(document).ready(function () {
         let reader = new FileReader()
         reader.onload = function (e) {
             $('#show-image-from-input').css({
-                'width':'233.33px',
-                'height':'233.33px'
+                'width': '233.33px',
+                'height': '233.33px'
             }).attr('src', e.target.result)
         }
 

@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Services\Auth\DefaultLogin;
 use App\Services\Auth\DefaultLogout;
+use App\Services\Order\CancelOrder;
+use App\Services\Order\CreateOrder;
+use App\Services\Order\PaidOrder;
 use App\Services\Product\CreateProduct;
 use App\Services\Product\DeleteProductPermanently;
 use App\Services\Product\RestoreProduct;
@@ -31,6 +34,10 @@ class ServiceContainerProvider extends ServiceProvider
         $this->registerService('SoftDeleteProduct', SoftDeleteProduct::class);
         $this->registerService('RestoreProduct', RestoreProduct::class);
         $this->registerService('DeleteProductPermanently', DeleteProductPermanently::class);
+
+        $this->registerService('CreateOrder', CreateOrder::class);
+        $this->registerService('PaidOrder', PaidOrder::class);
+        $this->registerService('CancelOrder', CancelOrder::class);
     }
 
     /**

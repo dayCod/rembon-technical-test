@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProdukPesanan extends Model
 {
@@ -26,4 +27,14 @@ class ProdukPesanan extends Model
      * @var array<int, string>
      */
     protected $guarded = ['id'];
+
+    /**
+     * belongs to relation between order and product order.
+     *
+     * @return BelongsToRelation
+     */
+    public function produk(): BelongsTo
+    {
+        return $this->belongsTo(Produk::class, 'produk_id', 'id');
+    }
 }
