@@ -44,7 +44,7 @@
                                             <i class="fa fa-edit"></i>
                                         </a>
                                         @else
-                                        <a href="" class="btn btn-sm btn-danger btn-delete">
+                                        <a href="{{ route('backside.order.delete-action', ['uuid' => $order->uuid]) }}" class="btn btn-sm btn-danger btn-delete">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                         @endif

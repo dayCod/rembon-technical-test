@@ -60,6 +60,7 @@ Route::group(['prefix' => 'backside', 'as' => 'backside.', 'middleware' => ['aut
         Route::post('/create', [OrderController::class, 'storeOrderToPesananAndProdukPesananTable'])->name('store-action');
         Route::get('/{uuid}/cancel', [OrderController::class, 'updateOrderStatusToCancel'])->name('cancel-action');
         Route::get('/{uuid}/paid-off', [OrderController::class, 'updateOrderStatusToPaid'])->name('paid-off-action');
+        Route::delete('/{uuid}/delete', [OrderController::class, 'deleteSpecificOrder'])->name('delete-action');
     });
 });
 

@@ -7,6 +7,7 @@ use App\Http\Requests\Order\CreateAndUpdateOrderRequest;
 use App\Models\Pesanan;
 use App\Models\Produk;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -95,5 +96,19 @@ class OrderController extends Controller
         ]);
 
         return redirect()->route('backside.order.index-view')->with('success', $process['message']);
+    }
+
+    /**
+     * delete specific order data.
+     *
+     * @return JsonResponse
+     */
+    public function deleteSpecificOrder(string $uuid): JsonResponse
+    {
+        $process = app('DeleteOrder')->execute([
+            'pesanan_uuid' => $uuid,
+        ]);
+
+        return response()->json(['success', $process['message']]);
     }
 }
