@@ -2,6 +2,7 @@
 
 namespace App\Services\Order;
 
+use Exception;
 use App\Models\Produk;
 use App\Models\Pesanan;
 use App\Services\BaseService;
@@ -28,6 +29,11 @@ class PaidOrder extends BaseService implements BaseServiceInterface
 
             $group_order_by_of_his_product->each(function ($product_amount, $product_id) {
                 $find_related_product = Produk::with('stokProduk')->where('id', $product_id)->first();
+
+                if ($product_amount > $find_related_product->stokProduk->stok) {
+                    throw new Exception('Total Produk Yang Dipesan Tidak Boleh Lebih dari Stok Produk yang Tersedia');
+                }
+
                 $find_related_product->stokProduk->update([
                     'stok' => $find_related_product->stokProduk->stok - $product_amount,
                 ]);

@@ -110,11 +110,6 @@ class OrderController extends Controller
      */
     public function updateOrderStatusToCancel(string $uuid)
     {
-        // Not Allowed if Status is'nt Pending
-        if (Pesanan::where('uuid', $uuid)->first()->getOrderStatus() != "Pending") {
-            return JsonApiResponse::unauthorized('Pesanan Sudah Tidak Dapat Di Update', []);
-        }
-
         $process = app('CancelOrder')->execute([
             'pesanan_uuid' => $uuid,
         ]);
@@ -133,14 +128,23 @@ class OrderController extends Controller
      */
     public function updateOrderStatusToPaid(string $uuid)
     {
+        DB::beginTransaction();
 
-        $process = app('PaidOrder')->execute([
-            'pesanan_uuid' => $uuid,
-        ]);
+        try {
+            $process = app('PaidOrder')->execute([
+                'pesanan_uuid' => $uuid,
+            ]);
 
-        if (!$process['success']) return JsonApiResponse::notFound($process['message'], $process['data']);
+            if (!$process['success']) return JsonApiResponse::notFound($process['message'], $process['data']);
 
-        return JsonApiResponse::success($process['message'], $process['data']);
+            DB::commit();
+
+            return JsonApiResponse::success($process['message'], $process['data']);
+        } catch (\Exception $ex) {
+            DB::rollBack();
+
+            return JsonApiResponse::response($ex->getCode(), false, $ex->getMessage(), ['file' => $ex->getFile()]);
+        }
     }
 
     /**

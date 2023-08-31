@@ -152,16 +152,25 @@ class OrderController extends Controller
      */
     public function updateOrderStatusToPaid(string $uuid): RedirectResponse
     {
-        // Not Allowed if Status is'nt Pending
-        if (Pesanan::where('uuid', $uuid)->first()->getOrderStatus() != "Pending") {
-            abort(401);
+        DB::beginTransaction();
+
+        try {
+            // Not Allowed if Status is'nt Pending
+            if (Pesanan::where('uuid', $uuid)->first()->getOrderStatus() != "Pending") {
+                abort(401);
+            }
+
+            $process = app('PaidOrder')->execute([
+                'pesanan_uuid' => $uuid,
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('backside.order.index-view')->with('success', $process['message']);
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            dd($ex->getMessage());
         }
-
-        $process = app('PaidOrder')->execute([
-            'pesanan_uuid' => $uuid,
-        ]);
-
-        return redirect()->route('backside.order.index-view')->with('success', $process['message']);
     }
 
     /**
