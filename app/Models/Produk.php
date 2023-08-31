@@ -16,7 +16,7 @@ class Produk extends Model
      *
      * @var string
      */
-    protected $table = 'produk';
+    protected $table = 'Mst.produk';
 
     /**
      * Indicates if the model should be timestamped.

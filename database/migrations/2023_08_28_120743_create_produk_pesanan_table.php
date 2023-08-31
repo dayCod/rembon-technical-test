@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('produk_pesanan', function (Blueprint $table) {
+        Schema::create('Trx.produk_pesanan', function (Blueprint $table) {
             $table->id();
             $table->uuid();
             $table->foreignId('pesanan_id')->constrained('pesanan')

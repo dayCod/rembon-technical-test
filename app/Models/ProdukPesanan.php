@@ -12,7 +12,7 @@ class ProdukPesanan extends Model
      *
      * @var string
      */
-    protected $table = 'produk_pesanan';
+    protected $table = 'Trx.produk_pesanan';
 
     /**
      * Indicates if the model should be timestamped.

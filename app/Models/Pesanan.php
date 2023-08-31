@@ -13,7 +13,7 @@ class Pesanan extends Model
      *
      * @var string
      */
-    protected $table = 'pesanan';
+    protected $table = 'Trx.pesanan';
 
     /**
      * Indicates if the model should be timestamped.

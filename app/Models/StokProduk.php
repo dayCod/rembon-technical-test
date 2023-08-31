@@ -11,7 +11,7 @@ class StokProduk extends Model
      *
      * @var string
      */
-    protected $table = 'stok_produk';
+    protected $table = 'Mst.stok_produk';
 
     /**
      * Indicates if the model should be timestamped.
