@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Backside;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\CreateAndUpdateOrderRequest;
+use App\Http\Resources\OrderResourceCollection;
 use App\Http\Response\JsonApiResponse;
 use App\Models\Pesanan;
 use App\Models\Produk;
@@ -26,7 +27,7 @@ class OrderController extends Controller
 
         if ($orders->count() < 1) return JsonApiResponse::notFound('Data Pesanan Tidak Ditemukan', []);
 
-        return JsonApiResponse::success('Data Pesanan Berhasil Diambil', $orders->toArray());
+        return JsonApiResponse::success('Data Pesanan Berhasil Diambil', OrderResourceCollection::collectionData($orders));
     }
 
     /**

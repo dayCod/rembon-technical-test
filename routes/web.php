@@ -14,7 +14,13 @@ use Illuminate\Support\Facades\Route;
 | Default Redirected Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/', function () { return redirect()->route('auth.login-view'); })->middleware(['guest']);
+Route::get('/test-1', function () {
+    return view('test.product');
+});
+
+Route::get('/test-2', function () {
+    return view('test.order');
+});
 
 /*
 |--------------------------------------------------------------------------

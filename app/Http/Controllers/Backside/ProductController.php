@@ -19,7 +19,7 @@ class ProductController extends Controller
      */
     public function productIndexView(): View
     {
-        $products = Produk::orderBy('id', 'desc')->get();
+        $products = Produk::withSum('produkPesanan', 'jumlah')->orderBy('id', 'desc')->get();
 
         return view('page.produk.index', compact('products'));
     }

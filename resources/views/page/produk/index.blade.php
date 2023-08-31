@@ -32,7 +32,7 @@
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td class="text-center">{{ $product->nama }}</td>
                                     <td class="text-center">{{ $product->stokProduk->stok }}</td>
-                                    <td class="text-center">-</td>
+                                    <td class="text-center">{{ $product->produk_pesanan_sum_jumlah ?? '0' }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('backside.product.edit-view', ['uuid' => $product->uuid]) }}" class="btn btn-success btn-sm">
                                             <i class="fa fa-edit"></i>

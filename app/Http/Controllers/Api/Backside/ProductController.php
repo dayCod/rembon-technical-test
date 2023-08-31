@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function showAllProduct()
     {
-        $products = Produk::orderBy('id', 'desc')->get();
+        $products = Produk::with('stokProduk')->withSum('produkPesanan', 'jumlah')->orderBy('id', 'desc')->get();
 
         if ($products->count() < 1) return JsonApiResponse::notFound('Data Produk Tidak Ditemukan', []);
 
