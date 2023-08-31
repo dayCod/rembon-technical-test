@@ -22,7 +22,7 @@ class CreateAndUpdateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'produk_id.*' => ['required', 'exists:produk,id'],
+            'produk_id.*' => ['required', 'exists:pgsql,Mst,produk,id'],
             'jumlah.*' => ['required', 'min:0', 'numeric'],
         ];
     }

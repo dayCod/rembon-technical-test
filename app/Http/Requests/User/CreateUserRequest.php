@@ -24,7 +24,7 @@ class CreateUserRequest extends FormRequest
         return [
             'nama_depan' => ['required', 'max:30', 'string'],
             'nama_belakang' => ['required', 'max:30', 'string'],
-            'email' => ['required', 'email', 'unique:user,email'],
+            'email' => ['required', 'email', 'unique:pgsql,Usr,user,email'],
             'password' => ['required', 'string', 'min:6'],
             'nomor_hp' => ['required', 'regex:/\(?(?:\+62|62|0)(?:\d{2,3})?\)?[ .-]?\d{2,4}[ .-]?\d{2,4}[ .-]?\d{2,4}/', 'min:9', 'max:15'],
             'role' => ['required'],
