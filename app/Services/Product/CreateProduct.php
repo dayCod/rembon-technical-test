@@ -30,8 +30,8 @@ class CreateProduct extends BaseService implements BaseServiceInterface
         $this->results['success'] = true;
         $this->results['message'] = 'Produk Berhasil Dibuat';
         $this->results['data'] = [
-            'product' => $create_product,
-            'product_stock' => $product_stock,
+            'produk' => $create_product,
+            'stok_produk' => $product_stock,
         ];
     }
 }

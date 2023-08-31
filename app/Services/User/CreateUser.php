@@ -21,7 +21,7 @@ class CreateUser extends BaseService implements BaseServiceInterface
         $this->results['success'] = true;
         $this->results['message'] = 'User Berhasil Dibuat';
         $this->results['data'] = [
-            'created_user' => $create_user
+            'user' => $create_user
         ];
     }
 }

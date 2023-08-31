@@ -27,7 +27,7 @@ class CancelOrder extends BaseService implements BaseServiceInterface
             $this->results['success'] = true;
             $this->results['message'] = 'Pesanan Berhasil Di Batalkan';
             $this->results['data'] = [
-                'order' => $find_order
+                'pesanan' => $find_order
             ];
         } else {
             $this->results['response_code'] = 404;

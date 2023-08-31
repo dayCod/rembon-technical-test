@@ -23,7 +23,9 @@ class SoftDeleteProduct extends BaseService implements BaseServiceInterface
             $this->results['response_code'] = 200;
             $this->results['success'] = true;
             $this->results['message'] = 'Produk Berhasil Dihapus';
-            $this->results['data'] = ['uuid' => $dto['produk_uuid']];
+            $this->results['data'] = [
+                'produk' => $find_product,
+            ];
         } else {
             $this->results['response_code'] = 404;
             $this->results['success'] = false;

@@ -32,8 +32,8 @@ class UpdateProduct extends BaseService implements BaseServiceInterface
             $this->results['success'] = true;
             $this->results['message'] = 'Produk Berhasil Diubah';
             $this->results['data'] = [
-                'product' => $find_product,
-                'product_stock' => $find_product->stokProduk,
+                'produk' => $find_product,
+                'stok_produk' => $find_product->stokProduk,
             ];
         } else {
             $this->results['response_code'] = 404;
