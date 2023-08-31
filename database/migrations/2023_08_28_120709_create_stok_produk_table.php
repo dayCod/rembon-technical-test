@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('Mst.stok_produk', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('produk_id')->constrained('produk')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+            $table->foreignId('produk_id')->references('id')
+                ->on('Usr.user')->cascadeOnUpdate()->cascadeOnDelete();
             $table->unsignedInteger('stok')->default(0);
             $table->timestamp('tgl_diubah')->nullable();
         });

@@ -14,12 +14,10 @@ return new class extends Migration
         Schema::create('Trx.produk_pesanan', function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->foreignId('pesanan_id')->constrained('pesanan')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-            $table->foreignId('produk_id')->constrained('produk')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+            $table->foreignId('pesanan_id')->references('id')
+                ->on('Trx.pesanan')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('produk_id')->references('id')
+                ->on('Mst.produk')->cascadeOnUpdate()->cascadeOnDelete();
             $table->unsignedInteger('jumlah')->default(1);
             $table->timestamp('tgl_dibuat')->nullable();
             $table->timestamp('tgl_diubah')->nullable();

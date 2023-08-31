@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('Trx.pesanan', function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->foreignId('user_id')->constrained('user')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+            $table->foreignId('user_id')->references('id')
+                ->on('Usr.user')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('kode_pesanan', 10)->nullable();
             $table->timestamp('tgl_pesanan')->nullable();
             $table->string('kode_voucher', 20)->nullable();
