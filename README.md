@@ -1,7 +1,7 @@
 # Laravel 9 Assessment Test
 A Simple Laravel 9 Assessment Application Template For Your Development Needs.
 
-## Installation
+## Installation and How to Use
 
 Clone the project.
 ```bash
@@ -51,6 +51,30 @@ Generate Client Passport Key
 php artisan pssport:install
 ```
 
+Rules
+```bash
+- Role Buyer : Only Access Order Feature
+- Role Seller : Only Access Product Feature
+```
+
+After you Generate the Token by Loging in your account Via Api, Make Sure the Role is Matched with his own Permission
+
+Go to :
+```bash
+cd resources/view/test/[order | product]
+```
+
+and Jump to Line order:line 98 | product:line 94 
+```js
+$.ajax({
+    ...,
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader('Authorization','Bearer ${Paste your token Here}'
+        )
+    },
+    ...,
+})
+```
 
 ## System That Used On this Project
 | PHP Version      | ^8.0.2 |
