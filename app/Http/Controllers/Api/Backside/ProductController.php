@@ -175,6 +175,6 @@ class ProductController extends Controller
 
         if (!$process['success']) return JsonApiResponse::notFound($process['message'], $process['data']);
 
-        return JsonApiResponse::success($process['message'], $process['data']);
+        return JsonApiResponse::success($process['message'], ['uuid' => $uuid]);
     }
 }

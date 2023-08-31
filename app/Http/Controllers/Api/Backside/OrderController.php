@@ -64,11 +64,6 @@ class OrderController extends Controller
      */
     public function findSpecificOrder(string $uuid)
     {
-        // Not Allowed if Status is'nt Pending
-        if (Pesanan::where('uuid', $uuid)->first()->getOrderStatus() != "Pending") {
-            return JsonApiResponse::unauthorized('Pesanan Sudah Tidak Dapat Di Update', []);
-        }
-
         $find_order = Pesanan::with('produkPesanan')->where('uuid', $uuid)->first();
 
         if (empty($find_order)) JsonApiResponse::notFound('Data Pesanan Yang Dimaksud Tidak Ditemukan', []);
@@ -85,11 +80,6 @@ class OrderController extends Controller
      */
     public function updateProductAction(CreateAndUpdateOrderRequest $request, string $uuid)
     {
-        // Not Allowed if Status is'nt Pending
-        if (Pesanan::where('uuid', $uuid)->first()->getOrderStatus() != "Pending") {
-            return JsonApiResponse::unauthorized('Pesanan Sudah Tidak Dapat Di Update', []);
-        }
-
         DB::beginTransaction();
 
         try {
@@ -130,6 +120,7 @@ class OrderController extends Controller
 
         if (!$process['success']) return JsonApiResponse::notFound($process['message'], $process['data']);
 
+
         return JsonApiResponse::success($process['message'], $process['data']);
     }
 
@@ -141,10 +132,6 @@ class OrderController extends Controller
      */
     public function updateOrderStatusToPaid(string $uuid)
     {
-        // Not Allowed if Status is'nt Pending
-        if (Pesanan::where('uuid', $uuid)->first()->getOrderStatus() != "Pending") {
-            return JsonApiResponse::unauthorized('Pesanan Sudah Tidak Dapat Di Update', []);
-        }
 
         $process = app('PaidOrder')->execute([
             'pesanan_uuid' => $uuid,
@@ -162,11 +149,6 @@ class OrderController extends Controller
      */
     public function deleteSpecificOrder(string $uuid)
     {
-        // Not Allowed if Status is'nt Pending
-        if (Pesanan::where('uuid', $uuid)->first()->getOrderStatus() == "Pending") {
-            return JsonApiResponse::unauthorized('Pesanan Sudah Tidak Dapat Di Hapus', []);
-        }
-
         $process = app('DeleteOrder')->execute([
             'pesanan_uuid' => $uuid,
         ]);
