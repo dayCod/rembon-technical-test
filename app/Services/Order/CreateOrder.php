@@ -41,9 +41,9 @@ class CreateOrder extends BaseService implements BaseServiceInterface
 
         $get_total_amount_of_each_product->each(function ($product_amount, $product_id) {
             $find_related_product = Produk::with('stokProduk')->where('id', $product_id)->first();
-            $find_related_ordered_product_amount = ProdukPesanan::where('produk_id', $product_id)->whereNull('tgl_dihapus')->whereHas('pesanan', function ($query) {
+            $find_related_ordered_product_amount = ProdukPesanan::select(['produk_id', 'tgl_dihapus', 'pesanan', 'jumlah'])->where('produk_id', $product_id)->whereNull('tgl_dihapus')->whereHas('pesanan', function ($query) {
                 return $query->whereNull('tgl_dibatalkan');
-            })->pluck('jumlah')->sum();
+            })->sum('jumlah');
 
             if ($product_amount > ($find_related_product->stokProduk->stok - $find_related_ordered_product_amount)) {
                 throw new Exception('Total Produk Yang Dipesan Tidak Boleh Lebih dari Stok Produk yang Tersedia');
