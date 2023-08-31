@@ -22,6 +22,8 @@ class ProductController extends Controller
     {
         $products = Produk::orderBy('id', 'desc')->get();
 
+        if ($products->count() < 1) return JsonApiResponse::notFound('Data Produk Tidak Ditemukan', []);
+
         return JsonApiResponse::success('Data Produk Berhasil Diambil', $products->toArray());
     }
 
@@ -35,6 +37,8 @@ class ProductController extends Controller
         $products = Produk::with('stokProduk')->orderBy('id', 'desc')->get()->filter(function ($value) {
             return $value->stokProduk->stok > 0;
         })->values();
+
+        if ($products->count() < 1) return JsonApiResponse::notFound('Data Produk Tidak Ditemukan', []);
 
         return JsonApiResponse::success('Data Produk Berhasil Diambil', $products->toArray());
     }
@@ -88,13 +92,25 @@ class ProductController extends Controller
      */
     public function updateProductAction(CreateAndUpdateProductRequest $request, string $uuid)
     {
-        $data = $request->validated();
-        $data['produk_uuid'] = $uuid;
-        $process = app('UpdateProduct')->execute($data);
+        DB::beginTransaction();
 
-        if (!$process['success']) return JsonApiResponse::notFound($process['message'], $process['data']);
+        try {
+            $data = $request->validated();
+            $data['produk_uuid'] = $uuid;
+            $process = app('UpdateProduct')->execute($data);
 
-        return JsonApiResponse::success($process['message'], $process['data']);
+            if (!$process['success']) return JsonApiResponse::notFound($process['message'], $process['data']);
+
+            DB::commit();
+
+            return JsonApiResponse::success($process['message'], $process['data']);
+        } catch (\Exception $ex) {
+
+            DB::rollBack();
+
+            return JsonApiResponse::response($ex->getCode(), false, $ex->getMessage(), ['file' => $ex->getFile()]);
+
+        }
     }
 
     /**
@@ -111,7 +127,7 @@ class ProductController extends Controller
 
         if (!$process['success']) return JsonApiResponse::notFound($process['message'], $process['data']);
 
-        return JsonApiResponse::success($process['message'], $process['data']);
+        return JsonApiResponse::success($process['message'], ['uuid' => $uuid]);
     }
 
     /**
@@ -122,6 +138,8 @@ class ProductController extends Controller
     public function showAllTrashedProduct()
     {
         $trashed_products_data = Produk::onlyTrashed()->get();
+
+        if ($trashed_products_data->count() < 1) return JsonApiResponse::notFound('Data Produk Tidak Ditemukan', []);
 
         return JsonApiResponse::success('Berhasil Ambil Data Produk Yang Telah Dihapus', $trashed_products_data->toArray());
     }
