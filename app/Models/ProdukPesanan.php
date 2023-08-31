@@ -37,4 +37,14 @@ class ProdukPesanan extends Model
     {
         return $this->belongsTo(Produk::class, 'produk_id', 'id');
     }
+
+    /**
+     * belongs to relation between order product and order.
+     *
+     * @return BelongsToRelation
+     */
+    public function pesanan(): BelongsTo
+    {
+        return $this->belongsTo(Pesanan::class, 'pesanan_id', 'id');
+    }
 }
