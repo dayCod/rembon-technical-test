@@ -5,6 +5,7 @@ namespace App\Services\Order;
 use Exception;
 use App\Models\Produk;
 use App\Models\Pesanan;
+use App\Models\ProdukPesanan;
 use App\Services\BaseService;
 use InvalidArgumentException;
 use App\Services\BaseServiceInterface;
@@ -56,8 +57,11 @@ class UpdateOrder extends BaseService implements BaseServiceInterface
             // Checking Process, For Make Sure there is no greater than Stock of Product
             $get_total_amount_of_each_product->each(function ($product_amount, $product_id) {
                 $find_related_product = Produk::with('stokProduk')->where('id', $product_id)->first();
+                $find_related_ordered_product_amount = ProdukPesanan::select(['produk_id', 'tgl_dihapus', 'pesanan', 'jumlah'])->where('produk_id', $product_id)->whereNull('tgl_dihapus')->whereHas('pesanan', function ($query) {
+                    return $query->whereNull('tgl_dibatalkan');
+                })->sum('jumlah');
 
-                if ($product_amount > $find_related_product->stokProduk->stok) {
+                if ($product_amount > ($find_related_product->stokProduk->stok - $find_related_ordered_product_amount)) {
                     throw new Exception('Total Produk Yang Dipesan Tidak Boleh Lebih dari Stok Produk yang Tersedia');
                 }
             });
