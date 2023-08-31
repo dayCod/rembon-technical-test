@@ -14,11 +14,20 @@ use Illuminate\Support\Facades\Route;
 | Default Redirected Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/test-1', function () {
+Route::get('/', function () {
+    return redirect()->route('auth.login-view');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Rembon Test Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/show-product', function () {
     return view('test.product');
 });
 
-Route::get('/test-2', function () {
+Route::get('/show-order', function () {
     return view('test.order');
 });
 

@@ -51,7 +51,7 @@ Generate Client Passport Key
 php artisan pssport:install
 ```
 
-Rules
+Strict Rules
 ```bash
 - Role Buyer : Only Access Order Feature
 - Role Seller : Only Access Product Feature
@@ -59,7 +59,7 @@ Rules
 
 After you Generate the Token by Loging in your account Via Api, Make Sure the Role is Matched with his own Permission
 
-Go to :
+Test View Directory :
 ```bash
 cd resources/view/test/[order | product]
 ```
@@ -74,6 +74,13 @@ $.ajax({
     },
     ...,
 })
+```
+
+## Default View Url 
+```bash
+- Test Show Product From Api: {base_url}/show-product
+- Test Show Order From Api: {base_url}/show-order
+- Main Application: {base_url}/
 ```
 
 ## System That Used On this Project
