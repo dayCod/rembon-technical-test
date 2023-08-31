@@ -14,13 +14,27 @@ use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     /**
-     * display product index view.
+     * display product index.
      *
      * @return JsonResponse
      */
     public function showAllProduct()
     {
         $products = Produk::orderBy('id', 'desc')->get();
+
+        return JsonApiResponse::success('Data Produk Berhasil Diambil', $products->toArray());
+    }
+
+    /**
+     * display not empty product index.
+     *
+     * @return JsonResponse
+     */
+    public function showAllNotEmptyProduct()
+    {
+        $products = Produk::with('stokProduk')->orderBy('id', 'desc')->get()->filter(function ($value) {
+            return $value->stokProduk->stok > 0;
+        })->values();
 
         return JsonApiResponse::success('Data Produk Berhasil Diambil', $products->toArray());
     }

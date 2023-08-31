@@ -41,7 +41,9 @@ class PaidOrder extends BaseService implements BaseServiceInterface
             $this->results['response_code'] = 200;
             $this->results['success'] = true;
             $this->results['message'] = 'Pesanan Berhasil Di Lunasi';
-            $this->results['data'] = $find_order;
+            $this->results['data'] = [
+                'order' => $find_order
+            ];
         } else {
             $this->results['response_code'] = 404;
             $this->results['success'] = false;

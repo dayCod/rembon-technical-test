@@ -48,7 +48,7 @@ class JsonApiResponse
      */
     public static function badRequest(string|array $message = "", array $data)
     {
-        return self::response(StatusCode::BAD_REQUEST, true, $message, $data);
+        return self::response(StatusCode::BAD_REQUEST, false, $message, $data);
     }
 
     /**
@@ -61,7 +61,7 @@ class JsonApiResponse
      */
     public static function unprocessableEntity(string|array $message = "", array $data)
     {
-        return self::response(StatusCode::UNPROCESSABLE_ENTITY, true, $message, $data);
+        return self::response(StatusCode::UNPROCESSABLE_ENTITY, false, $message, $data);
     }
 
     /**
@@ -74,7 +74,7 @@ class JsonApiResponse
      */
     public static function internalServerError(string|array $message = "", array $data)
     {
-        return self::response(StatusCode::INTERNAL_SERVER_ERR, true, $message, $data);
+        return self::response(StatusCode::INTERNAL_SERVER_ERR, false, $message, $data);
     }
 
     /**
@@ -87,7 +87,7 @@ class JsonApiResponse
      */
     public static function notFound(string|array $message = "", array $data)
     {
-        return self::response(StatusCode::NOT_FOUND, true, $message, $data);
+        return self::response(StatusCode::NOT_FOUND, false, $message, $data);
     }
 
     /**
@@ -100,6 +100,6 @@ class JsonApiResponse
      */
     public static function unauthorized(string|array $message = "", array $data)
     {
-        return self::response(StatusCode::UNAUTHORIZED, true, $message, $data);
+        return self::response(StatusCode::UNAUTHORIZED, false, $message, $data);
     }
 }

@@ -18,7 +18,6 @@ class UpdateOrder extends BaseService implements BaseServiceInterface
      */
     public function process(array $dto)
     {
-        dd($dto);
         $find_order = Pesanan::with('produkPesanan')->where('uuid', $dto['pesanan_uuid'])->first();
 
         if (!empty($find_order)) {
@@ -117,8 +116,10 @@ class UpdateOrder extends BaseService implements BaseServiceInterface
 
             $this->results['response_code'] = 200;
             $this->results['success'] = true;
-            $this->results['message'] = 'Pesanan Berhasil Di Batalkan';
-            $this->results['data'] = $find_order;
+            $this->results['message'] = 'Pesanan Berhasil Di Ubah';
+            $this->results['data'] = [
+                'order' => $find_order,
+            ];
         } else {
             $this->results['response_code'] = 404;
             $this->results['success'] = false;
