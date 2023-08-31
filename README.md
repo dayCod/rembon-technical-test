@@ -1,5 +1,4 @@
-# Laravel 9 Assessment Test
-A Simple Laravel 9 Assessment Application Template For Your Development Needs.
+# AZ Product
 
 ## Installation and How to Use
 
