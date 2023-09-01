@@ -38,6 +38,7 @@
                                     <td class="text-center">{{ $order->getOrderStatus() }}</td>
                                     <td class="text-center">
                                         @if($order->getOrderStatus() == 'Pending')
+                                        <a href="{{ route('backside.order.show-related-product', ['uuid' => $order->uuid]) }}" class="btn btn-sm btn-primary">Lihat Detail Produk Pesanan</a>
                                         <a href="{{ route('backside.order.paid-off-action', ['uuid' => $order->uuid]) }}" class="btn btn-sm btn-primary">Bayar Lunas</a>
                                         <a href="{{ route('backside.order.cancel-action', ['uuid' => $order->uuid]) }}" class="btn btn-sm btn-danger">Batalkan</a>
                                         <a href="{{ route('backside.order.edit-view', ['uuid' => $order->uuid]) }}" class="btn btn-sm btn-success">

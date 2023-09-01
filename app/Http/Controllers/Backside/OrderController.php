@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Backside;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Order\CreateAndUpdateOrderRequest;
-use App\Models\Pesanan;
 use App\Models\Produk;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Pesanan;
 use Illuminate\Http\Request;
+use App\Models\ProdukPesanan;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\View\View;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Order\CreateAndUpdateOrderRequest;
 
 class OrderController extends Controller
 {
@@ -190,5 +191,91 @@ class OrderController extends Controller
         ]);
 
         return response()->json(['success', $process['message']]);
+    }
+
+    /**
+     * display related product order data.
+     *
+     * @param string $uuid
+     * @return View
+     */
+    public function showRelatedOrderedProduct(string $uuid): View
+    {
+        $find_order = Pesanan::where('uuid', $uuid)->first();
+        $ordered_products = ProdukPesanan::where('pesanan_id', $find_order->id)->get();
+
+        return view('page.pesanan.detail-pesanan', compact('ordered_products', 'uuid'));
+    }
+
+    /**
+     * display order trashed data.
+     *
+     * @param string $uuid
+     * @return View
+     */
+    public function trashedOrderView(string $uuid): View
+    {
+        $find_order = Pesanan::where('uuid', $uuid)->first();
+        $trashed_ordered_products = ProdukPesanan::onlyTrashed()->where('pesanan_id', $find_order->id)->get();
+
+        return view('page.pesanan.trashed-ordered-product', compact('trashed_ordered_products', 'uuid'));
+    }
+
+    /**
+     * soft delete specified ordered product
+     *
+     * @param string $order_uuid
+     * @param string $order_product_uuid
+     * @return JsonResponse
+     */
+    public function softDeleteOrderedProduct(string $order_uuid, string $order_product_uuid): JsonResponse
+    {
+        $find_order = Pesanan::where('uuid', $order_uuid)->first();
+        $process = app('DeleteOrderedProduct')->execute([
+            'order_id' => $find_order->id,
+            'ordered_product_uuid' => $order_product_uuid,
+        ]);
+
+        return response()->json(['success' => $process['message']]);
+    }
+
+    /**
+     * restore trashed product data.
+     *
+     * @param string $order_uuid
+     * @param string $order_product_uuid
+     * @return RedirectResponse
+     */
+    public function restoreTrashedOrderedProduct(string $order_uuid, string $order_product_uuid): RedirectResponse
+    {
+        $find_order = Pesanan::where('uuid', $order_uuid)->first();
+        $process = app('RestoreOrderedProduct')->execute([
+            'order_id' => $find_order->id,
+            'ordered_product_uuid' => $order_product_uuid,
+        ]);
+
+        return redirect()->route('backside.order.show-related-product', ['uuid' => $order_uuid])
+            ->with('success', $process['message']);
+    }
+
+    /**
+     * delete specified product permanently.
+     *
+     * @param string $order_uuid
+     * @param string $order_product_uuid
+     * @return JsonResponse
+     */
+    public function deleteOrderedProductPermanently(string $order_uuid, string $order_product_uuid): JsonResponse
+    {
+        $find_order = Pesanan::where('uuid', $order_uuid)->first();
+
+        $process = app('DeleteOrderedProductPermanently')->execute([
+            'order_id' => $find_order->id,
+            'ordered_product_uuid' => $order_product_uuid,
+        ]);
+
+        return response()->json([
+            'success' => $process['message']
+        ]);
     }
 }

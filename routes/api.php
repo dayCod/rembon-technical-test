@@ -46,11 +46,16 @@ Route::group(['prefix' => 'backside', 'as' => 'backside.', 'middleware' => ['aut
     Route::group(['prefix' => 'order', 'as' => 'order.', 'middleware' => ['role.api:buyer']], function () {
         Route::get('/', [OrderController::class, 'showAllOrders']);
         Route::post('/create', [OrderController::class, 'storeOrderToPesananAndProdukPesananTable']);
+        Route::get('/{uuid}/show-related-product', [OrderController::class, 'showRelatedOrderedProduct'])->name('show-related-product');
+        Route::get('/{uuid}/trash', [OrderController::class, 'trashedOrderView'])->name('trash-view');
         Route::get('/{uuid}/edit', [OrderController::class, 'findSpecificOrder']);
         Route::put('/{uuid}/update', [OrderController::class, 'updateProductAction']);
         Route::get('/{uuid}/cancel', [OrderController::class, 'updateOrderStatusToCancel']);
         Route::get('/{uuid}/paid-off', [OrderController::class, 'updateOrderStatusToPaid']);
         Route::delete('/{uuid}/delete', [OrderController::class, 'deleteSpecificOrder']);
+        Route::get('/{order_uuid}/{order_product_uuid}/restore', [OrderController::class, 'restoreTrashedOrderedProduct'])->name('restore-action');
+        Route::delete('/{order_uuid}/{order_product_uuid}/delete', [OrderController::class, 'softDeleteOrderedProduct'])->name('soft-delete');
+        Route::delete('/{order_uuid}/{order_product_uuid}/force-delete', [OrderController::class, 'deleteOrderedProductPermanently'])->name('force-delete');
     });
 
 });

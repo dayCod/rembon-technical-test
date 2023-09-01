@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Api\Backside;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Order\CreateAndUpdateOrderRequest;
-use App\Http\Resources\OrderResourceCollection;
-use App\Http\Response\JsonApiResponse;
-use App\Models\Pesanan;
 use App\Models\Produk;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Pesanan;
 use Illuminate\Http\Request;
+use App\Models\ProdukPesanan;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\View\View;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Response\JsonApiResponse;
+use App\Http\Resources\OrderResourceCollection;
+use App\Http\Requests\Order\CreateAndUpdateOrderRequest;
 
 class OrderController extends Controller
 {
@@ -161,5 +162,118 @@ class OrderController extends Controller
         if (!$process['success']) return JsonApiResponse::notFound($process['message'], $process['data']);
 
         return JsonApiResponse::success($process['message'], ['uuid' => $uuid]);
+    }
+
+    /**
+     * display related product order data.
+     *
+     * @param string $uuid
+     * @return JsonResponse
+     */
+    public function showRelatedOrderedProduct(string $uuid)
+    {
+        $find_order = Pesanan::where('uuid', $uuid)->first();
+
+        if (empty($find_order)) return JsonApiResponse::notFound('Pesanan Tidak Ditemukan', []);
+
+        $ordered_products = ProdukPesanan::where('pesanan_id', $find_order->id)->get();
+
+        if ($ordered_products->count() < 1) return JsonApiResponse::notFound('Pesanan Produk Belum Memiliki Data', []);
+
+        return JsonApiResponse::success('Data Produk Pesanan Berhasil Diambil', [
+            'pesanan' => $find_order,
+            'produk_pesanan' => $ordered_products
+        ]);
+    }
+
+    /**
+     * display order trashed data.
+     *
+     * @param string $uuid
+     * @return JsonResponse
+     */
+    public function trashedOrderView(string $uuid)
+    {
+        $find_order = Pesanan::where('uuid', $uuid)->first();
+
+        if (empty($find_order)) return JsonApiResponse::notFound('Pesanan Tidak Ditemukan', []);
+
+        $trashed_ordered_products = ProdukPesanan::onlyTrashed()->where('pesanan_id', $find_order->id)->get();
+
+        if ($trashed_ordered_products->count() < 1) return JsonApiResponse::notFound('Pesanan Produk Yang Dihapus Belum Memiliki Data', []);
+
+        return JsonApiResponse::success('Data Produk Pesanan Yang Dihapus Berhasil Diambil', [
+            'pesanan' => $find_order,
+            'produk_pesanan_terhapus' => $trashed_ordered_products,
+        ]);
+    }
+
+    /**
+     * soft delete specified ordered product
+     *
+     * @param string $order_uuid
+     * @param string $order_product_uuid
+     * @return JsonResponse
+     */
+    public function softDeleteOrderedProduct(string $order_uuid, string $order_product_uuid)
+    {
+        $find_order = Pesanan::where('uuid', $order_uuid)->first();
+
+        if (empty($find_order)) return JsonApiResponse::notFound('Pesanan Tidak Ditemukan', []);
+
+        $process = app('DeleteOrderedProduct')->execute([
+            'order_id' => $find_order->id,
+            'ordered_product_uuid' => $order_product_uuid,
+        ]);
+
+        if (!$process['success']) return JsonApiResponse::notFound('Produk Pesanan Tidak Ditemukan', []);
+
+        return JsonApiResponse::success($process['message'], ['produk_pesanan_uuid' => $order_product_uuid]);
+    }
+
+    /**
+     * restore trashed product data.
+     *
+     * @param string $order_uuid
+     * @param string $order_product_uuid
+     * @return JsonResponse
+     */
+    public function restoreTrashedOrderedProduct(string $order_uuid, string $order_product_uuid)
+    {
+        $find_order = Pesanan::where('uuid', $order_uuid)->first();
+
+        if (empty($find_order)) return JsonApiResponse::notFound('Pesanan Tidak Ditemukan', []);
+
+        $process = app('RestoreOrderedProduct')->execute([
+            'order_id' => $find_order->id,
+            'ordered_product_uuid' => $order_product_uuid,
+        ]);
+
+        if (!$process['success']) return JsonApiResponse::notFound('Produk Pesanan Tidak Ditemukan', []);
+
+        return JsonApiResponse::success($process['message'], $process['data']);
+    }
+
+    /**
+     * delete specified product permanently.
+     *
+     * @param string $order_uuid
+     * @param string $order_product_uuid
+     * @return JsonResponse
+     */
+    public function deleteOrderedProductPermanently(string $order_uuid, string $order_product_uuid)
+    {
+        $find_order = Pesanan::where('uuid', $order_uuid)->first();
+
+        if (empty($find_order)) return JsonApiResponse::notFound('Pesanan Tidak Ditemukan', []);
+
+        $process = app('DeleteOrderedProductPermanently')->execute([
+            'order_id' => $find_order->id,
+            'ordered_product_uuid' => $order_product_uuid,
+        ]);
+
+        if (!$process['success']) return JsonApiResponse::notFound('Produk Pesanan Tidak Ditemukan', []);
+
+        return JsonApiResponse::success($process['message'], ['produk_pesanan_uuid' => $order_product_uuid]);
     }
 }
