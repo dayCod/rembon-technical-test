@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <h4 class="card-title">Tong Sampah</h4>
-                        <a href="{{ route('backside.order.show-related-product-view', ['uuid' => $uuid]) }}" class="btn btn-secondary">
+                        <a href="{{ route('backside.order.show-related-product', ['uuid' => $uuid]) }}" class="btn btn-secondary">
                             <i class="fa fa-arrow-left"></i>
                             {{ __('Back') }}
                         </a>

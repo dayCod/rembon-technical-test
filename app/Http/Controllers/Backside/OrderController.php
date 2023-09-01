@@ -215,8 +215,8 @@ class OrderController extends Controller
      */
     public function trashedOrderView(string $uuid): View
     {
-        // $find_order = Pesanan::where('uuid', $uuid)->first();
-        // $trashed_ordered_products = ProdukPesanan::onlyTrashed()->where('pesanan_id', $find_order->id)->get();
+        $find_order = Pesanan::where('uuid', $uuid)->first();
+        $trashed_ordered_products = ProdukPesanan::onlyTrashed()->where('pesanan_id', $find_order->id)->get();
 
         return view('page.pesanan.trashed-ordered-product', compact('trashed_ordered_products', 'uuid'));
     }
