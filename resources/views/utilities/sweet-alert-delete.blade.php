@@ -3,7 +3,6 @@
         $('.btn-delete').click(function(e) {
             e.preventDefault()
             let href = $(this).attr('href')
-            console.log(href)
 
             swal({
                 title: "Warning",

@@ -267,7 +267,15 @@ class OrderController extends Controller
      */
     public function deleteOrderedProductPermanently(string $order_uuid, string $order_product_uuid): JsonResponse
     {
+        $find_order = Pesanan::where('uuid', $order_uuid)->first();
 
-        return response()->json();
+        $process = app('DeleteOrderedProductPermanently')->execute([
+            'order_id' => $find_order->id,
+            'ordered_product_uuid' => $order_product_uuid,
+        ]);
+
+        return response()->json([
+            'success' => $process['message']
+        ]);
     }
 }
