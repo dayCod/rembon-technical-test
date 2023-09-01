@@ -16,16 +16,16 @@ class DeleteOrderedProduct extends BaseService implements BaseServiceInterface
      */
     public function process(array $dto)
     {
-        $find_order = ProdukPesanan::where('uuid', $dto['ordered_product_uuid'])->where('pesanan_id', $dto['order_id'])->first();
+        $find_ordered_product = ProdukPesanan::where('uuid', $dto['ordered_product_uuid'])->where('pesanan_id', $dto['order_id'])->first();
 
-        if (!empty($find_order)) {
-            $find_order->delete();
+        if (!empty($find_ordered_product)) {
+            $find_ordered_product->delete();
 
             $this->results['response_code'] = 200;
             $this->results['success'] = true;
             $this->results['message'] = 'Produk Pesanan Berhasil Di Hapus';
             $this->results['data'] = [
-                'produk_pesanan' => $find_order,
+                'produk_pesanan' => $find_ordered_product,
             ];
         } else {
             $this->results['response_code'] = 404;
