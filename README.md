@@ -47,7 +47,7 @@ php artisan migrate --seed
 
 Generate Client Passport Key
 ```bash
-php artisan pssport:install
+php artisan passport:install
 ```
 
 Strict Rules
