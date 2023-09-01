@@ -47,6 +47,7 @@ Route::group(['prefix' => 'backside', 'as' => 'backside.', 'middleware' => ['aut
         Route::get('/', [OrderController::class, 'showAllOrders']);
         Route::post('/create', [OrderController::class, 'storeOrderToPesananAndProdukPesananTable']);
         Route::get('/{uuid}/show-related-product', [OrderController::class, 'showRelatedOrderedProduct'])->name('show-related-product');
+        Route::get('/{uuid}/trash', [OrderController::class, 'trashedOrderView'])->name('trash-view');
         Route::get('/{uuid}/edit', [OrderController::class, 'findSpecificOrder']);
         Route::put('/{uuid}/update', [OrderController::class, 'updateProductAction']);
         Route::get('/{uuid}/cancel', [OrderController::class, 'updateOrderStatusToCancel']);

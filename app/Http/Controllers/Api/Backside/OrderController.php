@@ -200,7 +200,7 @@ class OrderController extends Controller
 
         $trashed_ordered_products = ProdukPesanan::onlyTrashed()->where('pesanan_id', $find_order->id)->get();
 
-        if ($trashed_ordered_products->count() < 1) return JsonApiResponse::notFound('Pesanan Produk Belum Memiliki Data', []);
+        if ($trashed_ordered_products->count() < 1) return JsonApiResponse::notFound('Pesanan Produk Yang Dihapus Belum Memiliki Data', []);
 
         return JsonApiResponse::success('Data Produk Pesanan Yang Dihapus Berhasil Diambil', [
             'pesanan' => $find_order,
