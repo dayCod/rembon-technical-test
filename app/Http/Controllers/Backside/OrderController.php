@@ -248,7 +248,14 @@ class OrderController extends Controller
      */
     public function restoreTrashedOrderedProduct(string $order_uuid, string $order_product_uuid): RedirectResponse
     {
-        return redirect();
+        $find_order = Pesanan::where('uuid', $order_uuid)->first();
+        $process = app('RestoreOrderedProduct')->execute([
+            'order_id' => $find_order->id,
+            'ordered_product_uuid' => $order_product_uuid,
+        ]);
+
+        return redirect()->route('backside.order.show-related-product', ['uuid' => $order_uuid])
+            ->with('success', $process['message']);
     }
 
     /**
