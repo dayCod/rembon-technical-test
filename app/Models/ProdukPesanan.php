@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProdukPesanan extends Model
 {
+    use SoftDeletes;
+
     /**
      * The table associated with the model.
      *
@@ -29,6 +32,20 @@ class ProdukPesanan extends Model
     protected $guarded = ['id'];
 
     /**
+     * The attributes that are mass protected with dates.
+     *
+     * @var array<int, string>
+     */
+    protected $dates = ['tgl_dihapus'];
+
+    /**
+     * custom static deleted_at on soft delete traits.
+     *
+     * @var string
+     */
+    const DELETED_AT = 'tgl_dihapus';
+
+    /**
      * belongs to relation between order and product order.
      *
      * @return BelongsToRelation
@@ -36,5 +53,15 @@ class ProdukPesanan extends Model
     public function produk(): BelongsTo
     {
         return $this->belongsTo(Produk::class, 'produk_id', 'id');
+    }
+
+    /**
+     * belongs to relation between order product and order.
+     *
+     * @return BelongsToRelation
+     */
+    public function pesanan(): BelongsTo
+    {
+        return $this->belongsTo(Pesanan::class, 'pesanan_id', 'id');
     }
 }
